@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Personal profile and resume of Nqubeko Nqobani Gida." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Curriculum Vitae of Nqubeko Nqobani Gida.</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        header {
+            background: darkgreen;
+            color: white;
+            padding: 20px 0;
+            text-align: centr;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        section {
+            background: white;
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h3 {
+            border-bottom: 2px solid darkgreen;
+            padding-bottom: 5px;
+            color: darkgreen;
+        }
+
+        ul {
+            list-style-type: square;
+            padding-left: 20px;
+        }
+
+        ul {
+            list-style-type: square;
+            padding-left: 20px;
+        }
+
+        a {
+            color: darkgreen;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            color: black;
+        }
+
+        footer {
+            text-align: centre;
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Nqubeko Nqobani Gida:</h1>
+        <p>Personal Profile & Curriculum Vitae</p>
+    </header>
+    <div class="container">
+        <section>
+            <h3>About Me</h3>
+            <ul>
+                <li>Born on July 10, 2007.</li>
+                <li>Born and raised in Port Shepstone, KwaZulu Natal.</li>
+                <li>19 years old.</li>
+                <li>Romans 10:9.</li>
+                <li>Introverted extrovert.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>Hobbies:</h3>
+            <ul>
+                <li>Rugby player, specialising as a hooker(number 2).</li>
+                <li>Gym bro.</li>
+            </ul>
+            <p><em>(I do not really have much hobbies because I am never out of the house.)</em></p>
+        </section>
+
+        <section>
+            <h3>Education:</h3>
+            <ul>
+                <li>Attended Port Shepstone Primary School from 2014 till 2020, where I was a prefect in my senior
+                    year(2020).</li>
+                <li>Attended Port Shepstone High School from 2021 till 2025, where I was rugby captain for the under 14A
+                    team(2021), 2nd XV team captain(2024-2025), a 1st XV player(2024-2025) and a prefect in my senior
+                    year(2024-2025).</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>Ambitions:</h3>
+            <ul>
+                <li>Matthew 25:23</li>
+                <li>To one day be a husband to my wife, a father to my children and a leader of my family, which will be
+                    impossible without God, for all good and perfect gifts come from above according to the book of
+                    James
+                    1:17. </li>
+                <li>Being able to help the community that helped raise me(physically, spiritually, emotionally and
+                    mentally), as the saying goes, "It takes a village to raise a child."</li>
+                <li>Bench press 120kg and squat 200kg before I die.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>Skills:</h3>
+            <ul>
+                <li>Leadership.</li>
+                <li>Driving.</li>
+                <li>Problem solving.</li>
+                <li>Working well in collaboration.</li>
+                <li>Active listener.</li>
+                <li>Reliable.</li>
+                <li>Work well under pressure.</li>
+                <li>Punctual/Having a great sense of urgency.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>GitHub:</h3>
+            <p>
+                <a href="https://github.com/nqubegida7-web" target="_blank">View my code on GitHub</a>
+            </p>
+        </section>
+    </div>
+    <footer>
+        &copy; 2026 Nqubeko Nqobani Gida | All Rights Reserved
+    </footer>
+
+</body>
+
+</html>
