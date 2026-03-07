@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FragMatch — Your Match</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="data.js"></script>
+  <style>
+    :root {
+      --bg:         #0b0b0f;
+      --surface:    #13131a;
+      --surface2:   #1c1c28;
+      --border:     rgba(255,255,255,0.07);
+      --gold:       #c9a84c;
+      --gold-light: #f0d080;
+      --text:       #e8e4dc;
+      --muted:      #7a7470;
+      --accent:     #3a7bd5;
+      --red:        #c84040;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 56px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(11,11,15,0.9);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(14px);
+    }
+
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    nav { display: flex; gap: 24px; align-items: center; }
+
+    nav a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--text); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      border: none;
+      border-radius: 8px;
+      background: var(--gold);
+      color: #0b0b0f;
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .btn:hover { background: var(--gold-light); }
+
+    /* ── MAIN ── */
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 72px 24px 100px;
+    }
+
+    .result-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 500;
+      margin-bottom: 8px;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .result-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(40px, 6vw, 64px);
+      font-weight: 600;
+      line-height: 1.0;
+      margin-bottom: 40px;
+      animation: fadeUp 0.5s 0.1s ease both;
+    }
+
+    .result-headline em { font-style: italic; color: var(--gold-light); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── MAIN CARD ── */
+    .main-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px;
+      margin-bottom: 48px;
+      animation: fadeUp 0.5s 0.15s ease both;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .main-card::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .card-house {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    .card-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 600;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .tag {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      padding: 5px 12px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .tag-season  { background: rgba(58,123,213,0.15); color: #6ea8f0; }
+    .tag-profile { background: rgba(201,168,76,0.12); color: var(--gold); }
+    .tag-cat     { background: rgba(255,255,255,0.05); color: var(--muted); }
+
+    .card-notes {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+
+    .card-notes span { color: var(--text); }
+
+    /* Radar chart */
+    .radar-wrap {
+      margin-bottom: 32px;
+    }
+
+    .radar-label {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+      margin-bottom: 14px;
+    }
+
+    .radar-bars { display: flex; flex-direction: column; gap: 10px; }
+
+    .radar-row {
+      display: grid;
+      grid-template-columns: 80px 1fr 36px;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .radar-name {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: right;
+    }
+
+    .radar-track {
+      height: 6px;
+      background: var(--surface2);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .radar-fill {
+      height: 100%;
+      border-radius: 10px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      width: 0%;
+    }
+
+    .radar-pct {
+      font-size: 11px;
+      color: var(--muted);
+      font-family: 'Outfit', sans-serif;
+    }
+
+    /* Price display */
+    .price-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .price-amount {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      font-weight: 600;
+      color: var(--gold-light);
+    }
+
+    .price-currency {
+      background: var(--surface2);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 14px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .price-currency:focus { outline: none; border-color: var(--gold); }
+    .price-currency option { background: #1c1c28; }
+
+    .wishlist-btn-main {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .wishlist-btn-main:hover, .wishlist-btn-main.saved {
+      border-color: var(--red);
+      color: var(--red);
+    }
+
+    /* ── ALTERNATIVES ── */
+    .alts-label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 500;
+      margin-bottom: 16px;
+      animation: fadeUp 0.5s 0.2s ease both;
+    }
+
+    .alts-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      animation: fadeUp 0.5s 0.25s ease both;
+    }
+
+    .alts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+      animation: fadeUp 0.5s 0.3s ease both;
+    }
+
+    .alt-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      transition: all 0.25s;
+      cursor: default;
+    }
+
+    .alt-card:hover {
+      border-color: rgba(201,168,76,0.25);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+    }
+
+    .alt-house {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    .alt-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+
+    .alt-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .alt-notes {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ── BACK BUTTON ── */
+    .back-wrap {
+      margin-top: 56px;
+      animation: fadeUp 0.5s 0.35s ease both;
+    }
+
+    /* ── ERROR ── */
+    .error-state {
+      text-align: center;
+      padding: 80px 20px;
+      color: var(--muted);
+    }
+
+    .error-state h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      header { padding: 16px 20px; }
+      nav a { display: none; }
+      main { padding: 48px 16px 80px; }
+      .main-card { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="logo">FragMatch</a>
+    <nav>
+      <a href="index.html#finder">Finder</a>
+      <a href="index.html#assistant">Recommender</a>
+      <a href="index.html#clone">Clone Finder</a>
+      <a href="index.html#price">Price</a>
+      <a href="index.html#wishlist">Wishlist</a>
+      <a href="index.html" class="btn">← Back</a>
+    </nav>
+  </header>
+
+  <main id="mainContent">
+    <div class="error-state">
+      <h2>Loading your match…</h2>
+    </div>
+  </main>
+
+  <script>
+    /* ════════════════════════════════════════
+       WISHLIST HELPERS
+    ════════════════════════════════════════ */
+    function getSaved() {
+      try { return JSON.parse(localStorage.getItem('fragmatch-wishlist') || '[]'); }
+      catch { return []; }
+    }
+    function setSaved(arr) { localStorage.setItem('fragmatch-wishlist', JSON.stringify(arr)); }
+
+    function toggleWishlist(name, btn) {
+      let saved = getSaved();
+      if (saved.includes(name)) {
+        saved = saved.filter(n => n !== name);
+        btn.classList.remove('saved');
+        btn.innerHTML = '♥ Save to Wishlist';
+      } else {
+        saved.push(name);
+        btn.classList.add('saved');
+        btn.innerHTML = '♥ Saved!';
+      }
+      setSaved(saved);
+    }
+
+    /* ════════════════════════════════════════
+       SCENT PROFILE → RADAR BARS
+    ════════════════════════════════════════ */
+    function getScentScores(frag) {
+      const noteMap = {
+        Fresh:    ['citrus','marine','sea salt','aquatic','bergamot','grapefruit','yuzu','sage','rosemary','lavender','neroli','fig'],
+        Floral:   ['jasmine','rose','tuberose','violet','lily','peony','rangoon creeper','white flowers','geranium'],
+        Sweet:    ['vanilla','honey','cocoa','gourmand','benzoin','tonka bean','caramel','amber','musk'],
+        Woody:    ['sandalwood','cedar','oud','vetiver','patchouli','tobacco','leather','frankincense','benzoin','birch'],
+        Spicy:    ['cardamom','cinnamon','pepper','ginger','saffron','clove','spicy'],
+      };
+      const scores = {};
+      for (const [dim, keywords] of Object.entries(noteMap)) {
+        scores[dim] = frag.notes.filter(n => keywords.includes(n)).length;
+      }
+      // Also boost primary profile
+      if (frag.profile === 'fresh')  scores['Fresh']  = Math.max(scores['Fresh'],  2);
+      if (frag.profile === 'floral') scores['Floral'] = Math.max(scores['Floral'], 2);
+      if (frag.profile === 'sweet')  scores['Sweet']  = Math.max(scores['Sweet'],  2);
+      if (frag.profile === 'woody')  scores['Woody']  = Math.max(scores['Woody'],  2);
+
+      const max = Math.max(...Object.values(scores), 1);
+      const pcts = {};
+      for (const k in scores) pcts[k] = Math.round((scores[k] / max) * 100);
+      return pcts;
+    }
+
+    /* ════════════════════════════════════════
+       DISPLAY RESULT
+    ════════════════════════════════════════ */
+    window.addEventListener('DOMContentLoaded', async () => {
+      await fetchLiveRates();
+
+      const params        = new URLSearchParams(window.location.search);
+      const fragranceName = params.get('fragrance');
+      const altsParam     = params.get('alternatives');
+      const main          = document.getElementById('mainContent');
+
+      if (!fragranceName) {
+        main.innerHTML = `<div class="error-state"><h2>No Fragrance Selected</h2><p>Go back and use the Fragrance Finder.</p><br><a href="index.html" class="btn" style="display:inline-flex">← Back to Finder</a></div>`;
+        return;
+      }
+
+      const frag = fragrances.find(f => f.name === decodeURIComponent(fragranceName));
+      if (!frag) {
+        main.innerHTML = `<div class="error-state"><h2>Fragrance Not Found</h2><p>We couldn't find "${decodeURIComponent(fragranceName)}" in our database.</p><br><a href="index.html" class="btn" style="display:inline-flex">← Back to Finder</a></div>`;
+        return;
+      }
+
+      let alternatives = [];
+      if (altsParam) {
+        alternatives = altsParam.split(',')
+          .map(n => fragrances.find(f => f.name === decodeURIComponent(n)))
+          .filter(Boolean);
+      }
+
+      const saved   = getSaved();
+      const scores  = getScentScores(frag);
+      const imgSrc  = frag.image || 'https://placehold.co/180x180/1c1c28/c9a84c?text=🌸';
+
+      main.innerHTML = `
+        <div class="result-eyebrow">Your Match</div>
+        <div class="result-headline">We found your<br><em>perfect scent</em></div>
+
+        <div class="main-card">
+          <div class="card-house">${frag.house} · ${frag.category}</div>
+          <div class="card-name">${frag.name}</div>
+
+          <div class="card-tags">
+            <span class="tag tag-season">${frag.season}</span>
+            <span class="tag tag-profile">${frag.profile}</span>
+            <span class="tag tag-cat">${frag.category}</span>
+          </div>
+
+          <div class="card-notes">Notes: <span>${frag.notes.join(', ')}</span></div>
+
+          <div class="radar-wrap">
+            <div class="radar-label">Scent Profile</div>
+            <div class="radar-bars" id="radarBars">
+              ${Object.entries(scores).map(([dim, pct]) => `
+                <div class="radar-row">
+                  <div class="radar-name">${dim}</div>
+                  <div class="radar-track"><div class="radar-fill" data-pct="${pct}" style="width:0%"></div></div>
+                  <div class="radar-pct">${pct}%</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <div class="price-row">
+            <div class="price-amount" id="priceDisplay">$${frag.price}</div>
+            <select class="price-currency" id="currencySelect" onchange="updatePrice(${frag.price})">
+              ${Object.keys(exchangeRates).map(c => `<option value="${c}">${c}</option>`).join('')}
+            </select>
+            <button class="wishlist-btn-main ${saved.includes(frag.name) ? 'saved' : ''}"
+                    id="wishBtn"
+                    onclick="toggleWishlist('${frag.name.replace(/'/g,"\\'")}', this)">
+              ♥ ${saved.includes(frag.name) ? 'Saved!' : 'Save to Wishlist'}
+            </button>
+          </div>
+        </div>
+
+        ${alternatives.length > 0 ? `
+          <div class="alts-label">You might also like</div>
+          <div class="alts-title">Similar Fragrances</div>
+          <div class="alts-grid">
+            ${alternatives.map(a => `
+              <div class="alt-card">
+                <div class="alt-house">${a.house}</div>
+                <div class="alt-name">${a.name}</div>
+                <div class="alt-price">$${a.price}</div>
+                <div class="alt-notes">${a.notes.join(' · ')}</div>
+              </div>
+            `).join('')}
+          </div>
+        ` : ''}
+
+        <div class="back-wrap">
+          <a href="index.html" class="btn">← Try Another Match</a>
+        </div>
+      `;
+
+      // Animate radar bars
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          document.querySelectorAll('.radar-fill').forEach(el => {
+            el.style.width = el.dataset.pct + '%';
+          });
+        }, 100);
+      });
+    });
+
+    /* ════════════════════════════════════════
+       CURRENCY CONVERSION
+    ════════════════════════════════════════ */
+    function updatePrice(usdPrice) {
+      const currency  = document.getElementById('currencySelect').value;
+      const rate      = exchangeRates[currency] ?? 1;
+      const converted = (usdPrice * rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      document.getElementById('priceDisplay').textContent = `${converted} ${currency}`;
+    }
+  </script>
+
+</body>
+</html>
