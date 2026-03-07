@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FragMatch</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* GLOBAL */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fa;
+            color: #222;
+            transition: 0.4s;
+
+        }
+
+        /* HEADER */
+
+        header {
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 25px 60px;
+
+        }
+
+        .logo {
+
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 700;
+
+        }
+
+        nav a {
+
+            margin-left: 25px;
+            text-decoration: none;
+            color: inherit;
+
+            font-weight: 500;
+
+        }
+
+        /* HERO */
+
+        .hero {
+
+            height: 85vh;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            background: linear-gradient(270deg,
+                    #6EC6FF,
+                    #FFD166,
+                    #6EC6FF,
+                    #2E8BC0);
+
+            background-size: 600% 600%;
+
+            animation: medSea 16s ease infinite;
+
+            color: white;
+
+        }
+
+        .hero h2 {
+
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+
+        }
+
+        .hero p {
+
+            max-width: 600px;
+            margin-top: 15px;
+
+        }
+
+        /* BACKGROUND ANIMATION */
+
+        @keyframes medSea {
+
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+
+        }
+
+        /* SLIDES */
+
+        .slide {
+            display: none;
+        }
+
+        .slide.active {
+            display: block;
+            animation: fade 1s;
+        }
+
+        @keyframes fade {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* BUTTON */
+
+        button {
+
+            padding: 12px 26px;
+            border: none;
+            border-radius: 30px;
+
+            background: #2E8BC0;
+            color: white;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            margin-top: 20px;
+
+            transition: 0.3s;
+
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        /* FINDER */
+
+        .finder {
+
+            padding: 80px 20px;
+            text-align: center;
+
+        }
+
+        select {
+
+            padding: 10px;
+            margin: 10px;
+
+            border-radius: 10px;
+
+        }
+
+        /* AI ASSISTANT */
+
+        .assistant {
+
+            padding: 80px 20px;
+            text-align: center;
+
+        }
+
+        .assistant input {
+
+            width: 60%;
+            max-width: 500px;
+
+            padding: 14px;
+
+            border-radius: 25px;
+            border: 1px solid #ccc;
+
+            margin-top: 15px;
+
+        }
+
+        /* GRID */
+
+        .grid {
+
+            display: grid;
+
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+
+            gap: 30px;
+
+            padding: 60px;
+
+        }
+
+        /* GLASS CARDS */
+
+        .card {
+
+            background: rgba(255, 255, 255, 0.25);
+
+            backdrop-filter: blur(15px);
+
+            border: 1px solid rgba(255, 255, 255, 0.4);
+
+            padding: 25px;
+
+            border-radius: 20px;
+
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+
+            transition: 0.4s;
+
+        }
+
+        .card:hover {
+
+            transform: translateY(-12px) scale(1.03);
+
+        }
+
+        /* SCENT BARS */
+
+        .scent-bar {
+
+            height: 8px;
+
+            border-radius: 10px;
+
+            background: #ddd;
+
+            margin: 8px 0;
+
+        }
+
+        .fill {
+
+            height: 100%;
+            border-radius: 10px;
+            background: #2E8BC0;
+
+        }
+
+        /* CLONE FINDER */
+
+        .clone {
+
+            padding: 80px 20px;
+            text-align: center;
+
+        }
+
+        .clone input {
+
+            padding: 12px;
+
+            border-radius: 20px;
+
+            border: 1px solid #ccc;
+
+            width: 250px;
+
+        }
+
+        /* DARK MODE */
+
+        @media (prefers-color-scheme: dark) {
+
+            body {
+
+                background: #0F0F14;
+                color: #F5F5F5;
+
+            }
+
+            .hero {
+
+                background: linear-gradient(135deg,
+                        #4A0E1A,
+                        #0F0F14);
+
+            }
+
+            .card {
+
+                background: #1A1A22;
+
+            }
+
+            button {
+
+                background: #D4AF37;
+                color: black;
+
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+
+        <div class="logo">FragMatch</div>
+
+        <nav>
+
+            <a href="#">Home</a>
+            <a href="#">Finder</a>
+            <a href="#">Database</a>
+
+        </nav>
+
+    </header>
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="slide active">
+            <h2>Find Your Perfect Scent</h2>
+            <p>Discover fragrances that match your mood, season and personality.</p>
+        </div>
+
+        <div class="slide">
+            <h2>Mediterranean Summer</h2>
+            <p>Fresh citrus fragrances inspired by sea breezes.</p>
+        </div>
+
+        <div class="slide">
+            <h2>Paris Date Night</h2>
+            <p>Warm seductive fragrances for unforgettable evenings.</p>
+        </div>
+
+        <button onclick="scrollToFinder()">Start Matching</button>
+
+    </section>
+
+    <!-- FINDER -->
+
+    <section class="finder" id="finder">
+
+        <h2>Fragrance Finder</h2>
+
+        <select id="season">
+            <option value="">Season</option>
+            <option value="summer">Summer</option>
+            <option value="winter">Winter</option>
+        </select>
+
+        <select id="profile">
+            <option value="">Scent</option>
+            <option value="fresh">Fresh</option>
+            <option value="sweet">Sweet</option>
+            <option value="spicy">Spicy</option>
+            <option value="woody">Woody</option>
+        </select>
+
+        <br>
+
+        <button onclick="findFragrance()">Match Me</button>
+
+        <div id="result"></div>
+
+    </section>
+
+    <!-- AI ASSISTANT -->
+
+    <section class="assistant">
+
+        <h2>FragMatch AI Assistant</h2>
+
+        <input id="aiInput" placeholder="Describe your ideal fragrance">
+
+        <br>
+
+        <button onclick="aiRecommend()">Ask AI</button>
+
+        <div id="aiResult"></div>
+
+    </section>
+
+    <!-- DATABASE -->
+
+    <section class="grid">
+
+        <div class="card">
+
+            <h3>Bleu de Chanel</h3>
+
+            <p>Fresh • Woody</p>
+
+            <div class="scent-bar">
+                <div class="fill" style="width:80%"></div>
+            </div>
+            Freshness
+
+            <div class="scent-bar">
+                <div class="fill" style="width:60%"></div>
+            </div>
+            Woodiness
+
+        </div>
+
+        <div class="card">
+
+            <h3>Dior Sauvage</h3>
+
+            <p>Spicy • Fresh</p>
+
+            <div class="scent-bar">
+                <div class="fill" style="width:70%"></div>
+            </div>
+            Spice
+
+            <div class="scent-bar">
+                <div class="fill" style="width:65%"></div>
+            </div>
+            Freshness
+
+        </div>
+
+        <div class="card">
+
+            <h3>Creed Aventus</h3>
+
+            <p>Fruity • Smoky</p>
+
+            <div class="scent-bar">
+                <div class="fill" style="width:75%"></div>
+            </div>
+            Fruit
+
+            <div class="scent-bar">
+                <div class="fill" style="width:70%"></div>
+            </div>
+            Smokiness
+
+        </div>
+
+    </section>
+
+    <!-- CLONE FINDER -->
+
+    <section class="clone">
+
+        <h2>Clone Finder</h2>
+
+        <input id="cloneInput" placeholder="Search fragrance">
+
+        <br>
+
+        <button onclick="cloneFinder()">Find Clone</button>
+
+        <div id="cloneResult"></div>
+
+    </section>
+
+    <script>
+
+        /* SLIDES */
+
+        let slides = document.querySelectorAll(".slide");
+        let current = 0;
+
+        function nextSlide() {
+
+            slides[current].classList.remove("active");
+
+            current++;
+
+            if (current >= slides.length) { current = 0; }
+
+            slides[current].classList.add("active");
+
+        }
+
+        setInterval(nextSlide, 5000);
+
+        /* SCROLL */
+
+        function scrollToFinder() {
+
+            document.getElementById("finder").scrollIntoView({
+                behavior: "smooth"
+            });
+
+        }
+
+        /* FINDER */
+
+        function findFragrance() {
+
+            let season = document.getElementById("season").value;
+            let profile = document.getElementById("profile").value;
+
+            let result = document.getElementById("result");
+
+            if (season === "summer" && profile === "fresh") {
+                result.innerHTML = "Try Versace Pour Homme";
+            }
+
+            else if (season === "winter" && profile === "sweet") {
+                result.innerHTML = "Try Parfums de Marly Layton";
+            }
+
+            else {
+                result.innerHTML = "Explore our fragrance database.";
+            }
+
+        }
+
+        /* AI ASSISTANT */
+
+        function aiRecommend() {
+
+            let input = document.getElementById("aiInput").value.toLowerCase();
+
+            let result = document.getElementById("aiResult");
+
+            if (input.includes("summer") || input.includes("fresh")) {
+                result.innerHTML = "You may like Versace Pour Homme";
+            }
+
+            else if (input.includes("date") || input.includes("night")) {
+                result.innerHTML = "Try Parfums de Marly Layton";
+            }
+
+            else if (input.includes("cheap")) {
+                result.innerHTML = "Try Armaf Club de Nuit Intense Man";
+            }
+
+            else {
+                result.innerHTML = "Explore fragrances like Bleu de Chanel";
+            }
+
+        }
+
+        /* CLONE FINDER */
+
+        function cloneFinder() {
+
+            let input = document.getElementById("cloneInput").value.toLowerCase();
+
+            let result = document.getElementById("cloneResult");
+
+            if (input.includes("aventus")) {
+                result.innerHTML = "Clone: Armaf Club de Nuit Intense Man";
+            }
+
+            else {
+                result.innerHTML = "Clone data coming soon.";
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Personal profile and resume of Nqubeko Nqobani Gida." />
+    <title>Nqubeko Nqobani Gida — CV</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;0,700;1,300;1,600&family=DM+Sans:wght@300;400;500&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        :root {
+            --ink: #0a0f0c;
+            --ink-soft: #1a2420;
+            --forest: #0d3320;
+            --emerald: #1a6640;
+            --jade: #25a060;
+            --jade-glow: rgba(37, 160, 96, 0.18);
+            --gold: #c8a84b;
+            --gold-light: #e2c97e;
+            --cream: #f5f0e8;
+            --text-body: #d4cfc6;
+            --text-muted: #7a7570;
+            --card: rgba(255, 255, 255, 0.035);
+            --card-border: rgba(255, 255, 255, 0.07);
+            --r: 12px;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--ink);
+            color: var(--text-body);
+            line-height: 1.7;
+            min-height: 100vh;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* ── Custom cursor ── */
+        .cursor-dot {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: var(--jade);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+        }
+
+        .cursor-ring {
+            position: fixed;
+            width: 36px;
+            height: 36px;
+            border: 1.5px solid rgba(37, 160, 96, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, border-color 0.2s;
+        }
+
+        /* ── Scroll progress ── */
+        #progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            width: 0%;
+            background: linear-gradient(90deg, var(--forest), var(--jade), var(--gold));
+            z-index: 1000;
+        }
+
+        /* ── Canvas bg ── */
+        #bg-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.55;
+        }
+
+        .page {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ══ HERO ══ */
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 80px 40px 60px;
+            gap: 60px;
+            position: relative;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 15%;
+            height: 70%;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, var(--jade), transparent);
+            opacity: 0.25;
+        }
+
+        .hero-eyebrow {
+            font-size: 0.72rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--jade);
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: reveal 0.8s 0.1s ease forwards;
+        }
+
+        .hero-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+            font-size: clamp(3rem, 5.5vw, 5.5rem);
+            line-height: 1.0;
+            color: var(--cream);
+            margin-bottom: 24px;
+            opacity: 0;
+            animation: reveal 0.9s 0.25s ease forwards;
+        }
+
+        .hero-name em {
+            font-style: italic;
+            color: var(--gold-light);
+            font-weight: 300;
+            display: block;
+        }
+
+        .hero-divider {
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--jade), var(--gold));
+            margin-bottom: 24px;
+            opacity: 0;
+            animation: reveal 0.8s 0.4s ease forwards;
+        }
+
+        .hero-subtitle {
+            font-size: 0.85rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 36px;
+            opacity: 0;
+            animation: reveal 0.8s 0.5s ease forwards;
+        }
+
+        .hero-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            opacity: 0;
+            animation: reveal 0.8s 0.65s ease forwards;
+        }
+
+        .pill {
+            padding: 7px 18px;
+            border: 1px solid var(--card-border);
+            border-radius: 50px;
+            font-size: 0.78rem;
+            letter-spacing: 0.06em;
+            background: var(--card);
+            color: var(--text-body);
+            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+            transition: border-color 0.25s, color 0.25s, background 0.25s;
+        }
+
+        .pill:hover {
+            border-color: var(--jade);
+            color: var(--jade);
+            background: var(--jade-glow);
+        }
+
+        .hero-photo-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            animation: reveal 1s 0.3s ease forwards;
+        }
+
+        .photo-frame {
+            position: relative;
+            width: clamp(230px, 28vw, 340px);
+            height: clamp(270px, 34vw, 420px);
+        }
+
+        .photo-frame::before,
+        .photo-frame::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-color: var(--gold);
+            border-style: solid;
+            z-index: 2;
+        }
+
+        .photo-frame::before {
+            top: -8px;
+            left: -8px;
+            border-width: 2px 0 0 2px;
+        }
+
+        .photo-frame::after {
+            bottom: -8px;
+            right: -8px;
+            border-width: 0 2px 2px 0;
+        }
+
+        .photo-inner {
+            width: 100%;
+            height: 100%;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 0 0 1px var(--card-border), 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 60px rgba(37, 160, 96, 0.08);
+            position: relative;
+        }
+
+        .photo-inner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            display: block;
+            filter: grayscale(20%) contrast(1.05);
+            transition: filter 0.4s;
+        }
+
+        .photo-inner:hover img {
+            filter: grayscale(0%) contrast(1);
+        }
+
+        .photo-inner::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(13, 51, 32, 0.7) 0%, rgba(13, 51, 32, 0.1) 40%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .photo-caption {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 3;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.85rem;
+            font-weight: 300;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.65);
+        }
+
+        .photo-badge {
+            position: absolute;
+            top: -16px;
+            right: -16px;
+            z-index: 4;
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--forest), var(--emerald));
+            border: 1px solid var(--jade);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            animation: spin 18s linear infinite;
+        }
+
+        .photo-badge span {
+            font-size: 0.55rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--gold-light);
+            text-align: center;
+            line-height: 1.4;
+            padding: 0 4px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .scroll-cue {
+            position: absolute;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            opacity: 0;
+            animation: reveal 0.8s 1.1s ease forwards;
+        }
+
+        .scroll-cue span {
+            font-size: 0.65rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--jade), transparent);
+            animation: pulse-line 1.8s ease-in-out infinite;
+        }
+
+        @keyframes pulse-line {
+
+            0%,
+            100% {
+                opacity: 0.3;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* ══ MAIN ══ */
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 40px 80px;
+        }
+
+        .section-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--jade);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-top: 48px;
+        }
+
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, var(--card-border), transparent);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 0;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: var(--r);
+            padding: 32px;
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            opacity: 0;
+            transform: translateY(24px);
+        }
+
+        .card.visible {
+            animation: reveal 0.6s ease forwards;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--jade), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .card:hover {
+            border-color: rgba(37, 160, 96, 0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 40px var(--jade-glow);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-full {
+            grid-column: 1 / -1;
+        }
+
+        .card-icon {
+            font-size: 1.6rem;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .card-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--cream);
+            margin-bottom: 20px;
+        }
+
+        .card-title span {
+            display: block;
+            width: 30px;
+            height: 1.5px;
+            background: var(--gold);
+            margin-top: 8px;
+            border-radius: 2px;
+        }
+
+        .card ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .card ul li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 0.9rem;
+            color: var(--text-body);
+            line-height: 1.6;
+        }
+
+        .card ul li::before {
+            content: '◆';
+            color: var(--jade);
+            font-size: 0.45rem;
+            flex-shrink: 0;
+            margin-top: 7px;
+        }
+
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-chip {
+            padding: 8px 18px;
+            border: 1px solid var(--card-border);
+            border-radius: 4px;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            color: var(--text-body);
+            background: rgba(255, 255, 255, 0.02);
+            transition: all 0.25s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-chip:hover {
+            border-color: var(--jade);
+            color: var(--jade);
+            transform: translateY(-2px);
+            background: var(--jade-glow);
+        }
+
+        /* ── Verse banner ── */
+        .verse-banner {
+            margin-top: 20px;
+            padding: 56px 48px;
+            background: linear-gradient(135deg, var(--forest) 0%, var(--ink-soft) 100%);
+            border: 1px solid rgba(37, 160, 96, 0.2);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .verse-banner::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 14rem;
+            color: rgba(37, 160, 96, 0.06);
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .verse-banner blockquote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+            font-style: italic;
+            font-weight: 300;
+            color: var(--cream);
+            line-height: 1.7;
+            max-width: 700px;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .verse-banner cite {
+            font-size: 0.75rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-style: normal;
+        }
+
+        /* ── GitHub CTA ── */
+        .github-cta {
+            margin-top: 20px;
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .github-cta-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            color: var(--cream);
+            font-weight: 600;
+        }
+
+        .github-cta-text span {
+            color: var(--jade);
+            font-style: italic;
+        }
+
+        .github-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            background: linear-gradient(135deg, var(--emerald), var(--jade));
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            box-shadow: 0 4px 20px rgba(37, 160, 96, 0.3);
+            transition: all 0.3s;
+        }
+
+        .github-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(37, 160, 96, 0.5);
+        }
+
+        /* ── Footer ── */
+        footer {
+            border-top: 1px solid var(--card-border);
+            padding: 32px 40px;
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        footer p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+
+        .footer-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--jade);
+            opacity: 0.4;
+        }
+
+        @keyframes reveal {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding: 80px 24px 60px;
+                gap: 40px;
+            }
+
+            .hero::after {
+                display: none;
+            }
+
+            .hero-divider {
+                margin: 0 auto 24px;
+            }
+
+            .hero-pills {
+                justify-content: center;
+            }
+
+            .hero-photo-wrap {
+                order: -1;
+            }
+
+            .photo-frame {
+                width: 200px;
+                height: 240px;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            main {
+                padding: 0 24px 60px;
+            }
+
+            .github-cta {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            footer {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            body {
+                cursor: auto;
+            }
+
+            .cursor-dot,
+            .cursor-ring {
+                display: none;
+            }
+
+            .verse-banner {
+                padding: 40px 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+    <div id="progress"></div>
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="page">
+
+        <section class="hero">
+            <div class="hero-text">
+                <p class="hero-eyebrow">Curriculum Vitae · 2026</p>
+                <h1 class="hero-name">
+                    Nqubeko<br>
+                    <em>Nqobani</em>
+                    Gida
+                </h1>
+                <div class="hero-divider"></div>
+                <p class="hero-subtitle">Port Shepstone, KwaZulu-Natal</p>
+                <div class="hero-pills">
+                    <span class="pill">🏉 Rugby Hooker</span>
+                    <span class="pill">💪 Fitness</span>
+                    <span class="pill">✝️ Romans 10:9</span>
+                    <span class="pill">🎓 Class of 2025</span>
+                    <span class="pill">🤝 Leader</span>
+                </div>
+            </div>
+
+            <div class="hero-photo-wrap">
+                <div class="photo-frame">
+                    <div class="photo-inner">
+                        <img src="https://i.pinimg.com/736x/ad/86/75/ad86750e32987cc8a88c8333821fd08e.jpg"
+                            alt="Profile photo of Nqubeko N. Gida" />
+                    </div>
+                    <p class="photo-caption">Nqubeko N. Gida</p>
+                    <div class="photo-badge">
+                        <span>Class<br>of<br>2025</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scroll-cue">
+                <span>Scroll</span>
+                <div class="scroll-line"></div>
+            </div>
+        </section>
+
+        <main>
+
+            <p class="section-label">Profile</p>
+            <div class="grid-2">
+                <div class="card">
+                    <span class="card-icon">👤</span>
+                    <h2 class="card-title">About Me <span></span></h2>
+                    <ul>
+                        <li>Born July 10, 2007 in Port Shepstone, KwaZulu-Natal.</li>
+                        <li>19 years old — an introverted extrovert.</li>
+                        <li>Faith-led: Romans 10:9.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <span class="card-icon">⚡</span>
+                    <h2 class="card-title">Interests <span></span></h2>
+                    <ul>
+                        <li>Rugby player specialising as a hooker (No. 2).</li>
+                        <li>Dedicated gym enthusiast — iron and discipline.</li>
+                        <li>A homebody who values deep thought and quiet ambition.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <p class="section-label">Education</p>
+            <div class="grid-2">
+                <div class="card">
+                    <span class="card-icon">🏫</span>
+                    <h2 class="card-title">Primary School <span></span></h2>
+                    <ul>
+                        <li>Port Shepstone Primary School, 2014–2020.</li>
+                        <li>Elected Prefect in Grade 7 (2020).</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🎓</span>
+                    <h2 class="card-title">High School <span></span></h2>
+                    <ul>
+                        <li>Port Shepstone High School, 2021–2025.</li>
+                        <li>Rugby captain — Under-14A (2021).</li>
+                        <li>2nd XV Captain & 1st XV player (2024–2025).</li>
+                        <li>School Prefect (2024–2025).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="verse-banner card card-full">
+                <blockquote>
+                    "Well done, good and faithful servant! You have been faithful with a few things; I will put you in
+                    charge of many things."
+                </blockquote>
+                <cite>— Matthew 25:23</cite>
+            </div>
+
+            <p class="section-label">Ambitions</p>
+            <div class="card card-full">
+                <span class="card-icon">🌍</span>
+                <h2 class="card-title">What I'm Building Toward <span></span></h2>
+                <ul>
+                    <li>To be a husband, father, and leader of my family — all made possible through God, from whom
+                        every good and perfect gift comes (James 1:17).</li>
+                    <li>To give back to the community that raised me — physically, spiritually, emotionally, and
+                        mentally. It takes a village to raise a child.</li>
+                    <li>To bench press 120 kg and squat 200 kg before I die. The iron doesn't lie.</li>
+                </ul>
+            </div>
+
+            <p class="section-label">Skills</p>
+            <div class="card card-full">
+                <span class="card-icon">🛠</span>
+                <h2 class="card-title">What I Bring <span></span></h2>
+                <div class="skills-grid">
+                    <div class="skill-chip">Leadership</div>
+                    <div class="skill-chip">Drive</div>
+                    <div class="skill-chip">Problem Solving</div>
+                    <div class="skill-chip">Collaboration</div>
+                    <div class="skill-chip">Active Listening</div>
+                    <div class="skill-chip">Reliability</div>
+                    <div class="skill-chip">Works Under Pressure</div>
+                    <div class="skill-chip">Punctuality</div>
+                    <div class="skill-chip">Sense of Urgency</div>
+                </div>
+            </div>
+
+            <div class="card github-cta card-full">
+                <p class="github-cta-text">See my <span>code</span> in the wild.</p>
+                <a href="https://github.com/nqubegida7-web" target="_blank" rel="noopener noreferrer"
+                    class="github-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                        fill="currentColor" aria-hidden="true">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.113.82-.262.82-.58
+              0-.286-.01-1.04-.015-2.04-3.338.726-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.757-1.333-1.757
+              -1.09-.745.083-.73.083-.73 1.205.085 1.84 1.237 1.84 1.237 1.07 1.834 2.807 1.304
+              3.492.997.108-.775.418-1.305.762-1.605-2.665-.3-5.466-1.332-5.466-5.93
+              0-1.31.468-2.38 1.236-3.22-.124-.303-.536-1.524.117-3.176 0 0 1.008-.322
+              3.3 1.23a11.52 11.52 0 0 1 3.003-.404c1.02.005 2.046.138 3.004.404
+              2.29-1.552 3.296-1.23 3.296-1.23.655 1.652.243 2.873.12 3.176.77.84
+              1.233 1.91 1.233 3.22 0 4.61-2.804 5.625-5.476 5.92.43.372.814 1.102.814
+              2.222 0 1.606-.015 2.898-.015 3.293 0 .32.216.698.825.58C20.565 21.796
+              24 17.298 24 12c0-6.63-5.37-12-12-12z" />
+                    </svg>
+                    View GitHub
+                </a>
+            </div>
+
+        </main>
+
+        <footer>
+            <p>&copy; 2026 Nqubeko Nqobani Gida &mdash; All Rights Reserved</p>
+            <div class="footer-dot"></div>
+            <p>Port Shepstone, KwaZulu-Natal</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // Scroll progress
+        const bar = document.getElementById('progress');
+        window.addEventListener('scroll', () => {
+            const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+            bar.style.width = pct + '%';
+        });
+
+        // Custom cursor
+        const dot = document.getElementById('cursorDot');
+        const ring = document.getElementById('cursorRing');
+        let mx = 0, my = 0, rx = 0, ry = 0;
+        document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+        (function animateCursor() {
+            dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+            rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+            ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+            requestAnimationFrame(animateCursor);
+        })();
+
+        document.querySelectorAll('a, .pill, .skill-chip, .card').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                ring.style.width = '56px'; ring.style.height = '56px';
+                ring.style.borderColor = 'rgba(200,168,75,0.55)';
+                dot.style.background = 'var(--gold)';
+            });
+            el.addEventListener('mouseleave', () => {
+                ring.style.width = '36px'; ring.style.height = '36px';
+                ring.style.borderColor = 'rgba(37,160,96,0.5)';
+                dot.style.background = 'var(--jade)';
+            });
+        });
+
+        // IntersectionObserver card reveals
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach((e, i) => {
+                if (e.isIntersecting) {
+                    e.target.style.animationDelay = (i * 0.07) + 's';
+                    e.target.classList.add('visible');
+                    io.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.card').forEach(c => io.observe(c));
+
+        // Particle canvas
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let W, H, particles = [];
+        function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+        resize();
+        window.addEventListener('resize', resize);
+
+        class Particle {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * W; this.y = Math.random() * H;
+                this.vx = (Math.random() - 0.5) * 0.25; this.vy = (Math.random() - 0.5) * 0.25;
+                this.r = Math.random() * 1.2 + 0.3; this.a = Math.random() * 0.4 + 0.05;
+            }
+            update() {
+                this.x += this.vx; this.y += this.vy;
+                if (this.x < 0 || this.x > W || this.y < 0 || this.y > H) this.reset();
+            }
+            draw() {
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(37,160,96,${this.a})`; ctx.fill();
+            }
+        }
+        for (let i = 0; i < 90; i++) particles.push(new Particle());
+
+        (function loop() {
+            ctx.clearRect(0, 0, W, H);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update(); particles[i].draw();
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y;
+                    const d = Math.sqrt(dx * dx + dy * dy);
+                    if (d < 120) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(37,160,96,${0.06 * (1 - d / 120)})`;
+                        ctx.lineWidth = 0.5; ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(loop);
+        })();
+    </script>
+
+</body>
+
+</html>
