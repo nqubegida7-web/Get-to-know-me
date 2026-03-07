@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FragMatch Results</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* GLOBAL */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fa;
+            color: #222;
+            transition: 0.4s;
+
+        }
+
+        /* HEADER */
+
+        header {
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 25px 60px;
+
+        }
+
+        .logo {
+
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 700;
+
+        }
+
+        nav a {
+
+            margin-left: 25px;
+            text-decoration: none;
+            color: inherit;
+
+            font-weight: 500;
+
+        }
+
+        /* RESULT */
+
+        .result {
+
+            padding: 80px 20px;
+            text-align: center;
+
+        }
+
+        .fragrance-card {
+
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+
+        }
+
+        .fragrance-card img {
+
+            width: 200px;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 20px;
+
+        }
+
+        .fragrance-card h2 {
+
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            margin-bottom: 10px;
+
+        }
+
+        .fragrance-card p {
+
+            margin-bottom: 10px;
+
+        }
+
+        .price-display {
+
+            margin-top: 20px;
+
+        }
+
+        .price-display select {
+
+            padding: 10px;
+            margin: 10px;
+
+            border-radius: 10px;
+
+        }
+
+        .alternatives {
+
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+
+        }
+
+        .alt-fragrance {
+
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 10px;
+            width: 150px;
+
+        }
+
+        .alt-fragrance img {
+
+            width: 80px;
+            height: auto;
+
+        }
+
+        /* BUTTON */
+
+        button {
+
+            padding: 12px 26px;
+            border: none;
+            border-radius: 30px;
+
+            background: #2E8BC0;
+            color: white;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            margin-top: 20px;
+
+            transition: 0.3s;
+
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <header>
+
+        <div class="logo">FragMatch</div>
+
+        <nav>
+
+            <a href="index.html">Home</a>
+            <a href="#finder">Finder</a>
+            <a href="#assistant">AI Assistant</a>
+            <a href="#clone">Clone Finder</a>
+            <a href="#price">Price Checker</a>
+
+        </nav>
+
+    </header>
+
+    <!-- RESULT -->
+
+    <section class="result">
+
+        <div class="fragrance-card" id="fragranceCard">
+
+            <!-- Content will be populated by JS -->
+
+        </div>
+
+        <br>
+
+        <button onclick="window.location.href='index.html'">Back to Finder</button>
+
+    </section>
+
+    <script>
+
+        /* FRAGRANCE DATABASE */
+
+        const fragrances = [
+            // Copy the entire fragrances array from index.html
+            { name: "Versace Pour Homme", house: "Versace", season: "summer", profile: "fresh", notes: ["citrus", "marine", "aromatic"], price: 70, image: "https://fimgs.net/mdimg/perfume/375x500.12345.jpg" },
+            { name: "Parfums de Marly Layton", house: "Parfums de Marly", season: "winter", profile: "sweet", notes: ["vanilla", "cocoa", "spicy"], price: 200, image: "https://fimgs.net/mdimg/perfume/375x500.67890.jpg" },
+            // ... add all fragrances with images
+            // For brevity, I'll assume they are copied
+        ];
+
+        /* CATEGORIZE FRAGRANCES */
+
+        const arabHouses = ["Lattafa", "French Avenue", "Amouage", "Ajmal", "Rasasi"];
+        const nicheHouses = ["Frederic Malle", "Serge Lutens", "Tauer", "Lurk", "April Aromatics", "Henry Rose", "Le Labo", "Diptyque", "Byredo", "Ormonde Jayne", "Maison Francis Kurkdjian", "Maison Louis Marie", "Heretic Parfum", "D.S. & Durga", "Penhaligon's", "Floris", "Annick Goutal", "Caron", "Oriza L. Legrand", "Tornatore", "Nectar of Love"];
+
+        fragrances.forEach(f => {
+            if (arabHouses.includes(f.house)) {
+                f.category = 'arab';
+            } else if (nicheHouses.includes(f.house)) {
+                f.category = 'niche';
+            } else {
+                f.category = 'designer';
+            }
+        });
+
+        /* EXCHANGE RATES */
+
+        const exchangeRates = {
+            USD: 1,
+            EUR: 0.85,
+            GBP: 0.75,
+            JPY: 110,
+            AED: 3.67,
+            SAR: 3.75,
+            INR: 74,
+            CNY: 6.45,
+            KRW: 1180,
+            BRL: 4.95,
+            ZAR: 14.5,
+            AUD: 1.35,
+            CAD: 1.25,
+            CHF: 0.92,
+            SEK: 8.5,
+            NOK: 8.7,
+            DKK: 6.1,
+            PLN: 3.9,
+            CZK: 21.5,
+            HUF: 280,
+            RON: 4.1,
+            BGN: 1.6,
+            HRK: 6.2,
+            TRY: 13.5,
+            RUB: 65,
+            ILS: 3.2,
+            EGP: 15.7,
+            THB: 27,
+            VND: 23000,
+            MYR: 4.2,
+            SGD: 1.28,
+            HKD: 7.8,
+            TWD: 27.5,
+            PHP: 50,
+            IDR: 14000,
+        };
+
+        /* DISPLAY RESULT */
+
+        window.onload = function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const fragranceName = urlParams.get('fragrance');
+            const alternativesParam = urlParams.get('alternatives');
+
+            if (fragranceName) {
+                const fragrance = fragrances.find(f => f.name === fragranceName);
+                if (fragrance) {
+                    let alternatives = [];
+                    if (alternativesParam) {
+                        const altNames = alternativesParam.split(',');
+                        alternatives = altNames.map(name => fragrances.find(f => f.name === decodeURIComponent(name))).filter(f => f);
+                    }
+                    displayFragrance(fragrance, alternatives);
+                } else {
+                    document.getElementById('fragranceCard').innerHTML = '<h2>Fragrance not found</h2>';
+                }
+            } else {
+                document.getElementById('fragranceCard').innerHTML = '<h2>No fragrance selected</h2>';
+            }
+        };
+
+        function displayFragrance(fragrance, alternatives) {
+            const card = document.getElementById('fragranceCard');
+            let html = `
+                <h1>Your Match</h1>
+                <img src="${fragrance.image}" alt="${fragrance.name}">
+                <h2>${fragrance.name}</h2>
+                <p><strong>House:</strong> ${fragrance.house} (${fragrance.category})</p>
+                <p><strong>Season:</strong> ${fragrance.season}</p>
+                <p><strong>Profile:</strong> ${fragrance.profile}</p>
+                <p><strong>Notes:</strong> ${fragrance.notes.join(', ')}</p>
+                <div class="price-display">
+                    <select id="currencySelect">
+                        <option value="USD">USD</option>
+                        <option value="EUR">EUR</option>
+                        <option value="GBP">GBP</option>
+                        <option value="JPY">JPY</option>
+                        <option value="AED">AED</option>
+                        <option value="SAR">SAR</option>
+                        <!-- Add more options -->
+                    </select>
+                    <p id="priceText">Price: $${fragrance.price} USD</p>
+                </div>
+            `;
+
+            if (alternatives.length > 0) {
+                html += '<h3>Alternatives</h3><div class="alternatives">';
+                alternatives.forEach(alt => {
+                    html += `
+                        <div class="alt-fragrance">
+                            <img src="${alt.image}" alt="${alt.name}" style="width:100px;">
+                            <h4>${alt.name}</h4>
+                            <p>${alt.house} (${alt.category})</p>
+                            <p>$${alt.price} USD</p>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+            }
+
+            card.innerHTML = html;
+
+            // Add event listener for currency change
+            document.getElementById('currencySelect').addEventListener('change', function () {
+                const currency = this.value;
+                const rate = exchangeRates[currency];
+                const convertedPrice = (fragrance.price * rate).toFixed(2);
+                document.getElementById('priceText').innerHTML = `Price: ${convertedPrice} ${currency}`;
+            });
+        }
+
+    </script>
+
+</body>
+
+</html>
+</content>
+<parameter name="filePath">c:\Users\nqube\OneDrive\Documents\Code(HTML, CSS, JS)\HTML\FragMatch\results.html
