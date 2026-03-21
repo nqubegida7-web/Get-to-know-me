@@ -1,0 +1,3774 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FragMatch — Find Your Scent</title>
+
+    <link
+        href=https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap
+        rel="stylesheet">
+
+    <style>
+        :root {
+
+            --bg: #0b0b0f;
+
+            --surface: #13131a;
+
+            --surface2: #1c1c28;
+
+            --border: rgba(255, 255, 255, 0.07);
+
+            --gold: #c9a84c;
+
+            --gold-light: #f0d080;
+
+            --text: #e8e4dc;
+
+            --muted: #7a7470;
+
+            --accent: #3a7bd5;
+
+            --red: #c84040;
+
+        }
+
+
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+
+        body {
+
+            font-family: 'Outfit', sans-serif;
+
+            background: var(--bg);
+
+            color: var(--text);
+
+            min-height: 100vh;
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+
+
+        /* ══════════════════════════════════
+
+       HEADER
+
+    ══════════════════════════════════ */
+
+        header {
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 100;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 0 56px;
+
+            height: 64px;
+
+            background: rgba(11, 11, 15, 0.94);
+
+            -webkit-backdrop-filter: blur(16px);
+
+            backdrop-filter: blur(16px);
+
+            border-bottom: 1px solid var(--border);
+
+            flex-shrink: 0;
+
+        }
+
+
+
+        .logo {
+
+            font-family: 'Cormorant Garamond', serif;
+
+            font-size: 24px;
+
+            font-weight: 600;
+
+            letter-spacing: 0.04em;
+
+            color: var(--gold);
+
+            cursor: pointer;
+
+            flex-shrink: 0;
+
+        }
+
+
+
+        nav {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 2px;
+
+        }
+
+
+
+        nav button {
+
+            background: none;
+
+            border: none;
+
+            color: var(--muted);
+
+            font-family: 'Outfit', sans-serif;
+
+            font-size: 13px;
+
+            font-weight: 500;
+
+            letter-spacing: 0.04em;
+
+            padding: 6px 13px;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            transition: color 0.2s, background 0.2s;
+
+            white-space: nowrap;
+
+        }
+
+
+
+        nav button:hover {
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        nav button.active {
+            color: var(--gold);
+            background: rgba(201, 168, 76, 0.09);
+        }
+
+
+
+        /* Hamburger */
+
+        .nav-toggle {
+
+            display: none;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            gap: 5px;
+
+            width: 36px;
+
+            height: 36px;
+
+            background: none;
+
+            border: none;
+
+            cursor: pointer;
+
+            padding: 4px;
+
+            flex-shrink: 0;
+
+        }
+
+
+
+        .nav-toggle span {
+
+            display: block;
+
+            height: 1.5px;
+
+            background: var(--muted);
+
+            border-radius: 2px;
+
+            transition: all 0.25s;
+
+            transform-origin: center;
+
+        }
+
+
+
+        .nav-toggle.open span:nth-child(1) {
+            transform: translateY(6.5px) rotate(45deg);
+        }
+
+        .nav-toggle.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .nav-toggle.open span:nth-child(3) {
+            transform: translateY(-6.5px) rotate(-45deg);
+        }
+
+
+
+        /* ══════════════════════════════════
+
+       PAGES
+
+    ══════════════════════════════════ */
+
+        .page {
+            display: none;
+            flex: 1;
+        }
+
+        .page.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+
+
+        /* ══════════════════════════════════
+
+       PAGE: HOME (HERO)
+
+    ══════════════════════════════════ */
+
+        #page-home {
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            position: relative;
+
+            overflow: hidden;
+
+            padding: 80px 24px;
+
+            min-height: calc(100vh - 64px);
+
+        }
+
+
+
+        .hero-bg {
+
+            position: absolute;
+
+            inset: 0;
+
+            background:
+
+                radial-gradient(ellipse 80% 60% at 50% 20%, rgba(201, 168, 76, 0.12) 0%, transparent 70%),
+
+                radial-gradient(ellipse 60% 80% at 80% 80%, rgba(58, 123, 213, 0.08) 0%, transparent 60%),
+
+                linear-gradient(180deg, #0b0b0f 0%, #0e0d14 100%);
+
+            animation: heroShift 18s ease-in-out infinite;
+
+        }
+
+
+
+        @keyframes heroShift {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+
+        }
+
+
+
+        .hero-inner {
+            position: relative;
+            z-index: 1;
+        }
+
+
+
+        .slide {
+            display: none;
+        }
+
+        .slide.active {
+            display: block;
+            animation: fadeUp 0.9s ease both;
+        }
+
+
+
+        .hero-eyebrow {
+
+            font-size: 11px;
+
+            letter-spacing: 0.22em;
+
+            text-transform: uppercase;
+
+            color: var(--gold);
+
+            font-weight: 500;
+
+            margin-bottom: 18px;
+
+        }
+
+
+
+        .hero h1 {
+
+            font-family: 'Cormorant Garamond', serif;
+
+            font-size: clamp(52px, 9vw, 96px);
+
+            font-weight: 600;
+
+            line-height: 1.0;
+
+            letter-spacing: -0.01em;
+
+            margin-bottom: 20px;
+
+        }
+
+
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--gold-light);
+        }
+
+
+
+        .hero p {
+
+            max-width: 480px;
+
+            margin: 0 auto;
+
+            font-size: 16px;
+
+            font-weight: 300;
+
+            color: var(--muted);
+
+            line-height: 1.7;
+
+        }
+
+
+
+        .hero-cta {
+
+            display: flex;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+
+            justify-content: center;
+
+            margin-top: 44px;
+
+        }
+
+
+
+        .hero-btn-primary {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 15px 34px;
+
+            background: var(--gold);
+
+            color: #0b0b0f;
+
+            border: none;
+
+            border-radius: 40px;
+
+            font-family: 'Outfit', sans-serif;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            letter-spacing: 0.04em;
+
+            cursor: pointer;
+
+            transition: all 0.25s;
+
+        }
+
+
+
+        .hero-btn-primary:hover {
+
+            background: var(--gold-light);
+
+            transform: translateY(-2px);
+
+            box-shadow: 0 12px 32px rgba(201, 168, 76, 0.3);
+
+        }
+
+
+
+        .hero-btn-secondary {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            padding: 15px 34px;
+
+            background: transparent;
+
+            color: var(--text);
+
+            border: 1px solid var(--border);
+
+            border-radius: 40px;
+
+            font-family: 'Outfit', sans-serif;
+
+            font-size: 14px;
+
+            font-weight: 500;
+
+            cursor: pointer;
+
+            transition: all 0.25s;
+
+        }
+
+
+
+        .hero-btn-secondary:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+
+
+        .slide-dots {
+
+            display: flex;
+
+            gap: 8px;
+
+            margin-top: 36px;
+
+            justify-content: center;
+
+            position: relative;
+
+            z-index: 1;
+
+        }
+
+
+
+        .dot {
+
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: transparent;
+
+            border: 1px solid var(--muted);
+
+            cursor: pointer;
+
+            transition: all 0.3s;
+
+        }
+
+
+
+        .dot.active {
+            background: var(--gold);
+            border-color: var(--gold);
+            width: 20px;
+            border-radius: 4px;
+        }
+
+
+
+        /* Feature strip */
+
+        .feature-strip {
+
+            position: relative;
+
+            z-index: 1;
+
+            display: flex;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+
+            justify-content: center;
+
+            margin-top: 64px;
+
+        }
+
+
+
+        .feature-pill {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 10px 18px;
+
+            background: var(--surface);
+
+            border: 1px solid var(--border);
+
+            border-radius: 40px;
+
+            font-size: 13px;
+
+            color: var(--muted);
+
+            cursor: pointer;
+
+            transition: all 0.2s;
+
+        }
+
+
+
+        .feature-pill:hover {
+            border-color: rgba(201, 168, 76, 0.3);
+            color: var(--text);
+        }
+
+        .feature-pill span {
+            font-size: 16px;
+        }
+
+
+
+        /* ══════════════════════════════════
+
+       SHARED INNER PAGE LAYOUT
+
+    ══════════════════════════════════ */
+
+        .inner-page {
+
+            max-width: 900px;
+
+            width: 100%;
+
+            margin: 0 auto;
+
+            padding: 60px 40px 100px;
+
+            flex: 1;
+
+        }
+
+
+
+        .page-eyebrow {
+
+            font-size: 11px;
+
+            letter-spacing: 0.2em;
+
+            text-transform: uppercase;
+
+            color: var(--gold);
+
+            font-weight: 500;
+
+            margin-bottom: 10px;
+
+        }
+
+
+
+        .page-title {
+
+            font-family: 'Cormorant Garamond', serif;
+
+            font-size: clamp(34px, 5vw, 54px);
+
+            font-weight: 600;
+
+            line-height: 1.0;
+
+            margin-bottom: 8px;
+
+        }
+
+
+
+        .page-title em {
+            font-style: italic;
+            color: var(--gold-light);
+        }
+
+
+
+        .page-subtitle {
+
+            font-size: 15px;
+
+            font-weight: 300;
+
+            color: var(--muted);
+
+            margin-bottom: 44px;
+
+            max-width: 540px;
+
+            line-height: 1.6;
+
+        }
+
+
+
+        /* ══════════════════════════════════
+
+       CARD
+
+    ══════════════════════════════════ */
+
+        .card {
+
+            background: var(--surface);
+
+            border: 1px solid var(--border);
+
+            border-radius: 16px;
+
+            padding: 36px;
+
+        }
+
+
+
+        /* ══════════════════════════════════
+
+       CONTROLS / FIELDS
+
+    ══════════════════════════════════ */
+
+        .controls {
+
+            display: flex;
+
+            gap: 16px;
+
+            flex-wrap: wrap;
+
+            align-items: flex-end;
+
+        }
+
+
+
+        .field {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 8px;
+
+            font-size: 11px;
+
+            letter-spacing: 0.1em;
+
+            text-transform: uppercase;
+
+            color: var(--muted);
+
+            font-weight: 500;
+
+        }
+
+
+
+        .field select,
+
+        .field input {
+
+            background: var(--surface2);
+
+            color: var(--text);
+
+            border: 1px solid var(--border);
+
+            border-radius: 8px;
+
+            padding: 12px 16px;
+
+            font-family: 'Outfit', sans-serif;
+
+            font-size: 14px;
+
+            transition: border-color 0.2s;
+
+            min-width: 170px;
+
+        }
+
+
+
+        .field select {
+
+            -webkit-appearance: none;
+
+            appearance: none;
+
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a7470' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+
+            background-repeat: no-repeat;
+
+            background-position: right 12px center;
+
+            padding-right: 36px;
+
+            cursor: pointer;
+
+        }
+
+
+
+        .field select option {
+            background: #1c1c28;
+        }
+
+        .field select:focus,
+
+        .field input:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        .field input::placeholder {
+            color: var(--muted);
+        }
+
+
+
+        /* Inline input row */
+
+        .input-row {
+
+            display: flex;
+
+            gap: 12px;
+
+            max-width: 600px;
+
+            margin-bottom: 24px;
+
+        }
+
+
+
+        .input-row input {
+
+            flex: 1;
+
+            background: var(--surface2);
+
+            color: var(--text);
+
+            border: 1px solid var(--border);
+
+            border-radius: 8px;
+
+            padding: 14px 18px;
+
+            font-family: 'Outfit', sans-serif;
+
+            font-size: 14px;
+
+            transition: border-color 0.2s;
+
+        }
+
+
+
+        .input-row input::placeholder {
+            color: var(--muted);
+        }
+
+        .input-row input:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+
+
+        /* ══════════════════════════════════
+
+       BUTTONS
+
+    ══════════════════════════════════ */
+
+        .btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 12px 28px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: var(--gold);
+
+            color: #0b0b0f;
+
+            font-family: 'Outfit', sans-serif;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: all 0.2s;
+
+            white-space: nowrap;
+
+        }
+
+
+
+        .btn:hover {
+            background: var(--gold-light);
+            transform: translateY(-1px);
+        }
+
+
+
+        .btn-outline {
+
+            background: transparent;
+
+            border: 1px solid var(--border);
+
+            color: var(--text);
+
+        }
+
+
+
+        .btn-outline:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: transparent;
+            transform: none;
+        }
+
+
+
+        /* ══════════════════════════════════
+
+       RESULT TEXT
+
+    ══════════════════════════════════ */
+
+        .result-text {
+
+            font-size: 15px;
+
+            line-height: 1.7;
+
+            color: var(--muted);
+
+            max-width: 600px;
+
+            min-height: 24px;
+
+            margin-top: 20px;
+
+        }
+
+
+
+        .result-text strong {
+            color: var(--gold);
+        }
+
+        .result-text .hl {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+
+
+        /* ══════════════════════════════════
+
+       FRAGRANCE CARDS & GRID
+
+    ══════════════════════════════════ */
+
+        .frag-grid {
+
+            display: grid;
+
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+
+            gap: 16px;
+
+        }
+
+
+
+        .frag-card {
+
+            background: var(--surface2);
+
+            border: 1px solid var(--border);
+
+            border-radius: 12px;
+
+            padding: 20px;
+
+            transition: all 0.25s;
+
+            position: relative;
+
+        }
+
+
+
+        .frag-card:hover {
+
+            border-color: rgba(201, 168, 76, 0.3);
+
+            transform: translateY(-3px);
+
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+
+        }
+
+
+
+        .frag-card-house {
+
+            font-size: 10px;
+
+            letter-spacing: 0.12em;
+
+            text-transform: uppercase;
+
+            color: var(--gold);
+
+            font-weight: 500;
+
+            margin-bottom: 5px;
+
+        }
+
+
+
+        .frag-card-name {
+
+            font-family: 'Cormorant Garamond', serif;
+
+            font-size: 18px;
+
+            font-weight: 600;
+
+            line-height: 1.2;
+
+            margin-bottom: 12px;
+
+        }
+
+
+
+        .frag-card-meta {
+
+            display: flex;
+
+            gap: 6px;
+
+            flex-wrap: wrap;
+
+            margin-bottom: 12px;
+
+        }
+
+
+
+        .tag {
+
+            font-size: 10px;
+
+            font-weight: 500;
+
+            letter-spacing: 0.06em;
+
+            padding: 3px 8px;
+
+            border-radius: 4px;
+
+            text-transform: uppercase;
+
+        }
+
+
+
+        .tag-season {
+            background: rgba(58, 123, 213, 0.15);
+            color: #6ea8f0;
+        }
+
+        .tag-profile {
+            background: rgba(201, 168, 76, 0.12);
+            color: var(--gold);
+        }
+
+        .tag-cat {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--muted);
+        }
+
+
+
+        .frag-card-price {
+
+            font-family: 'Cormorant Garamond', serif;
+
+            font-size: 20px;
+
+            font-weight: 600;
+
+        }
+
+
+
+        .frag-card-notes {
+
+            font-size: 11px;
+
+            color: var(--muted);
+
+            margin-top: 5px;
+
+        }
+
+
+
+        .wishlist-btn {
+
+            position: absolute;
+
+            top: 14px;
+            right: 14px;
+
+            background: none;
+
+            border: none;
+
+            font-size: 17px;
+
+            cursor: pointer;
+
+            opacity: 0.35;
+
+            transition: all 0.2s;
+
+            padding: 4px;
+
+            color: var(--text);
+
+            line-height: 1;
+
+        }
+
+
+
+        .wishlist-btn:hover,
+        .wishlist-btn.saved {
+            opacity: 1;
+            color: var(--red);
+        }
+
+
+
+        .grid-empty {
+
+            grid-column: 1/-1;
+
+            text-align: center;
+
+            color: var(--muted);
+
+            padding: 60px 0;
+
+            font-size: 15px;
+
+        }
+
+
+
+        /* ══════════════════════════════════
+
+       FILTER CHIPS
+
+    ══════════════════════════════════ */
+
+        .filter-chips {
+
+            display: flex;
+
+            gap: 8px;
+
+            flex-wrap: wrap;
+
+            margin-bottom: 24px;
+
+        }
+
+
+
+        .chip {
+
+            padding: 6px 16px;
+
+            border: 1px solid var(--border);
+
+            border-radius: 20px;
+
+            background: transparent;
+
+            color: var(--muted);
+
+            font-family: 'Outfit', sans-serif;
+
+            font-size: 12px;
+
+            font-weight: 500;
+
+            cursor: pointer;
+
+            transition: all 0.2s;
+
+        }
+
+
+
+        .chip:hover,
+        .chip.active {
+
+            border-color: var(--gold);
+
+            color: var(--gold);
+
+            background: rgba(201, 168, 76, 0.06);
+
+        }
+
+
+
+        /* ══════════════════════════════════
+
+       DB SEARCH
+
+    ══════════════════════════════════ */
+
+        .db-search {
+
+            background: var(--surface2);
+
+            color: var(--text);
+
+            border: 1px solid var(--border);
+
+            border-radius: 8px;
+
+            padding: 10px 16px;
+
+            font-family: 'Outfit', sans-serif;
+
+            font-size: 13px;
+
+            width: 280px;
+
+            margin-bottom: 20px;
+
+            transition: border-color 0.2s;
+
+        }
+
+
+
+        .db-search::placeholder {
+            color: var(--muted);
+        }
+
+        .db-search:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+
+
+        /* ══════════════════════════════════
+
+       PAGE: RESULTS (FINDER OUTPUT)
+
+    ══════════════════════════════════ */
+
+        .main-card {
+
+            background: var(--surface);
+
+            border: 1px solid var(--border);
+
+            border-radius: 20px;
+
+            padding: 40px;
+
+            margin-bottom: 40px;
+
+            position: relative;
+
+            overflow: hidden;
+
+        }
+
+
+
+        .main-card::before {
+
+            content: '';
+
+            position: absolute;
+
+            top: 0;
+            right: 0;
+
+            width: 300px;
+            height: 300px;
+
+            background: radial-gradient(circle, rgba(201, 168, 76, 0.07) 0%, transparent 70%);
+
+            pointer-events: none;
+
+        }
+
+
+
+        .card-house {
+
+            font-size: 11px;
+
+            letter-spacing: 0.15em;
+
+            text-transform: uppercase;
+
+            color: var(--gold);
+
+            font-weight: 500;
+
+            margin-bottom: 6px;
+
+        }
+
+
+
+        .card-name {
+
+            font-family: 'Cormorant Garamond', serif;
+
+            font-size: clamp(28px, 4vw, 42px);
+
+            font-weight: 600;
+
+            line-height: 1.1;
+
+            margin-bottom: 24px;
+
+        }
+
+
+
+        .card-notes {
+
+            font-size: 14px;
+
+            color: var(--muted);
+
+            margin-bottom: 32px;
+
+        }
+
+
+
+        .card-notes span {
+            color: var(--text);
+        }
+
+
+
+        /* Radar bars */
+
+        .radar-wrap {
+            margin-bottom: 32px;
+        }
+
+
+
+        .radar-label {
+
+            font-size: 11px;
+
+            letter-spacing: 0.1em;
+
+            text-transform: uppercase;
+
+            color: var(--muted);
+
+            font-weight: 500;
+
+            margin-bottom: 14px;
+
+        }
+
+
+
+        .radar-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+
+
+        .radar-row {
+
+            display: grid;
+
+            grid-template-columns: 72px 1fr 36px;
+
+            align-items: center;
+
+            gap: 12px;
+
+        }
+
+
+
+        .radar-name {
+            font-size: 12px;
+            color: var(--muted);
+            text-align: right;
+        }
+
+
+
+        .radar-track {
+
+            height: 6px;
+
+            background: var(--surface2);
+
+            border-radius: 10px;
+
+            overflow: hidden;
+
+        }
+
+
+
+        .radar-fill {
+
+            height: 100%;
+
+            border-radius: 10px;
+
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+
+            transition: width 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+
+            width: 0%;
+
+        }
+
+
+
+        .radar-pct {
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+
+
+        /* Price row */
+
+        .price-row {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 16px;
+
+            flex-wrap: wrap;
+
+        }
+
+
+
+        .price-amount {
+
+            font-family: 'Cormorant Garamond', serif;
+
+            font-size: 36px;
+
+            font-weight: 600;
+
+            color: var(--gold-light);
+
+        }
+
+
+
+        .price-currency {
+
+            background: var(--surface2);
+
+            color: var(--text);
+
+            border: 1px solid var(--border);
+
+            border-radius: 6px;
+
+            padding: 8px 14px;
+
+            font-family: 'Outfit', sans-serif;
+
+            font-size: 13px;
+
+            cursor: pointer;
+
+            -webkit-appearance: none;
+
+            appearance: none;
+
+        }
+
+
+
+        .price-currency:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        .price-currency option {
+            background: #1c1c28;
+        }
+
+
+
+        .wishlist-btn-main {
+
+            background: transparent;
+
+            border: 1px solid var(--border);
+
+            color: var(--muted);
+
+            border-radius: 8px;
+
+            padding: 10px 18px;
+
+            font-family: 'Outfit', sans-serif;
+
+            font-size: 13px;
+
+            font-weight: 500;
+
+            cursor: pointer;
+
+            transition: all 0.2s;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+        }
+
+
+
+        .wishlist-btn-main:hover,
+        .wishlist-btn-main.saved {
+
+            border-color: var(--red);
+
+            color: var(--red);
+
+        }
+
+
+
+        /* Alternatives */
+
+        .alts-grid {
+
+            display: grid;
+
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+
+            gap: 16px;
+
+            margin-top: 24px;
+
+        }
+
+
+
+        .alt-card {
+
+            background: var(--surface);
+
+            border: 1px solid var(--border);
+
+            border-radius: 12px;
+
+            padding: 20px;
+
+            transition: all 0.25s;
+
+        }
+
+
+
+        .alt-card:hover {
+
+            border-color: rgba(201, 168, 76, 0.25);
+
+            transform: translateY(-3px);
+
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+
+        }
+
+
+
+        .alt-house {
+
+            font-size: 10px;
+
+            letter-spacing: 0.12em;
+
+            text-transform: uppercase;
+
+            color: var(--gold);
+
+            font-weight: 500;
+
+            margin-bottom: 5px;
+
+        }
+
+
+
+        .alt-name {
+
+            font-family: 'Cormorant Garamond', serif;
+
+            font-size: 18px;
+
+            font-weight: 600;
+
+            line-height: 1.2;
+
+            margin-bottom: 10px;
+
+        }
+
+
+
+        .alt-price {
+
+            font-family: 'Cormorant Garamond', serif;
+
+            font-size: 20px;
+
+            font-weight: 600;
+
+        }
+
+
+
+        .alt-notes {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+
+
+        /* ══════════════════════════════════
+
+       PRICE CHECKER EXTRAS
+
+    ══════════════════════════════════ */
+
+        #priceResult strong {
+
+            font-family: 'Cormorant Garamond', serif;
+
+            font-size: 28px;
+
+            color: var(--gold-light);
+
+        }
+
+
+
+        .rate-note {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 8px;
+            opacity: 0.6;
+        }
+
+
+
+        /* ══════════════════════════════════
+
+       WISHLIST EMPTY
+
+    ══════════════════════════════════ */
+
+        .wishlist-empty {
+            color: var(--muted);
+            font-size: 15px;
+        }
+
+
+
+        /* ══════════════════════════════════
+
+       FOOTER
+
+    ══════════════════════════════════ */
+
+        footer {
+
+            padding: 32px 56px;
+
+            border-top: 1px solid var(--border);
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            flex-wrap: wrap;
+
+            gap: 16px;
+
+            flex-shrink: 0;
+
+        }
+
+
+
+        .footer-logo {
+
+            font-family: 'Cormorant Garamond', serif;
+
+            font-size: 20px;
+
+            color: var(--gold);
+
+        }
+
+
+
+        .footer-links {
+
+            display: flex;
+
+            gap: 4px;
+
+            flex-wrap: wrap;
+
+        }
+
+
+
+        .footer-links button {
+
+            background: none;
+
+            border: none;
+
+            color: var(--muted);
+
+            font-family: 'Outfit', sans-serif;
+
+            font-size: 12px;
+
+            padding: 4px 10px;
+
+            border-radius: 4px;
+
+            cursor: pointer;
+
+            transition: color 0.2s;
+
+        }
+
+
+
+        .footer-links button:hover {
+            color: var(--text);
+        }
+
+
+
+        .footer-note {
+            font-size: 11px;
+            color: var(--muted);
+            opacity: 0.6;
+        }
+
+
+
+        /* ══════════════════════════════════
+
+       TOAST
+
+    ══════════════════════════════════ */
+
+        .toast {
+
+            position: fixed;
+
+            bottom: 28px;
+            right: 28px;
+
+            background: var(--surface2);
+
+            border: 1px solid var(--gold);
+
+            color: var(--text);
+
+            padding: 12px 20px;
+
+            border-radius: 8px;
+
+            font-size: 13px;
+
+            font-weight: 500;
+
+            z-index: 999;
+
+            animation: toastIn 0.3s ease, toastOut 0.3s ease 2s forwards;
+
+            pointer-events: none;
+
+        }
+
+
+
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes toastOut {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+            }
+        }
+
+
+
+        /* ══════════════════════════════════
+
+       ANIMATIONS
+
+    ══════════════════════════════════ */
+
+        @keyframes fadeUp {
+
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+
+
+        .anim {
+            animation: fadeUp 0.45s ease both;
+        }
+
+        .anim-1 {
+            animation: fadeUp 0.45s 0.07s ease both;
+        }
+
+        .anim-2 {
+            animation: fadeUp 0.45s 0.14s ease both;
+        }
+
+        .anim-3 {
+            animation: fadeUp 0.45s 0.21s ease both;
+        }
+
+
+
+        /* ══════════════════════════════════
+
+       RESPONSIVE
+
+    ══════════════════════════════════ */
+
+        @media (max-width: 700px) {
+
+            header {
+                padding: 0 20px;
+            }
+
+            nav {
+                display: none;
+                position: absolute;
+                top: 64px;
+                left: 0;
+                right: 0;
+
+                flex-direction: column;
+                align-items: stretch;
+
+                background: var(--surface);
+                border-bottom: 1px solid var(--border);
+
+                padding: 12px 16px 16px;
+                gap: 2px;
+            }
+
+            nav.open {
+                display: flex;
+            }
+
+            nav button {
+                padding: 10px 14px;
+                font-size: 14px;
+                text-align: left;
+            }
+
+            .nav-toggle {
+                display: flex;
+            }
+
+            .inner-page {
+                padding: 40px 20px 80px;
+            }
+
+            .main-card {
+                padding: 24px;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            .field select,
+            .field input {
+                min-width: 100%;
+            }
+
+            .input-row {
+                flex-direction: column;
+            }
+
+            footer {
+                padding: 28px 20px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .footer-links {
+                display: none;
+            }
+
+        }
+
+
+
+        @media (max-width: 480px) {
+
+            #page-home {
+                padding: 60px 20px;
+            }
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+
+    <!-- HEADER -->
+
+    <header>
+
+        <div class="logo" onclick="navigate('home')">FragMatch</div>
+
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+
+            <span></span><span></span><span></span>
+
+        </button>
+
+        <nav id="mainNav">
+
+            <button onclick="navigate('finder')">Finder</button>
+
+            <button onclick="navigate('assistant')">AI Recommender</button>
+
+            <button onclick="navigate('database')">Database</button>
+
+            <button onclick="navigate('clone')">Clone Finder</button>
+
+            <button onclick="navigate('price')">Price Checker</button>
+
+            <button onclick="navigate('wishlist')">Wishlist</button>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- ══════════════════════════════════
+
+       PAGE: HOME
+
+  ══════════════════════════════════ -->
+
+    <div class="page active" id="page-home">
+
+        <div class="hero-bg"></div>
+
+        <div class="hero-inner">
+
+            <div class="slides" id="slides">
+
+                <div class="slide active">
+
+                    <div class="hero-eyebrow">Your personal scent advisor</div>
+
+                    <h1 class="hero">Find Your<br><em>Perfect Scent</em></h1>
+
+                    <p>Discover fragrances matched to your mood, season, and personality — from designer to niche.</p>
+
+                </div>
+
+                <div class="slide">
+
+                    <div class="hero-eyebrow">Mediterranean Summer</div>
+
+                    <h1 class="hero">Sea Breeze<br><em>&amp; Citrus Sun</em></h1>
+
+                    <p>Fresh, aquatic fragrances inspired by golden coastlines and warm ocean air.</p>
+
+                </div>
+
+                <div class="slide">
+
+                    <div class="hero-eyebrow">Paris Date Night</div>
+
+                    <h1 class="hero">Warm, Dark<br><em>&amp; Seductive</em></h1>
+
+                    <p>Rich oriental and woody fragrances for evenings that leave an impression.</p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="hero-cta">
+
+                <button class="hero-btn-primary" onclick="navigate('finder')">Start Matching →</button>
+
+                <button class="hero-btn-secondary" onclick="navigate('database')">Browse Database</button>
+
+            </div>
+
+
+
+            <div class="slide-dots" id="dots">
+
+                <div class="dot active" onclick="goToSlide(0)"></div>
+
+                <div class="dot" onclick="goToSlide(1)"></div>
+
+                <div class="dot" onclick="goToSlide(2)"></div>
+
+            </div>
+
+
+
+            <div class="feature-strip">
+
+                <div class="feature-pill" onclick="navigate('finder')"><span>🎯</span> Smart Finder</div>
+
+                <div class="feature-pill" onclick="navigate('assistant')"><span>✨</span> AI Recommender</div>
+
+                <div class="feature-pill" onclick="navigate('clone')"><span>💰</span> Clone Finder</div>
+
+                <div class="feature-pill" onclick="navigate('price')"><span>💱</span> Price Checker</div>
+
+                <div class="feature-pill" onclick="navigate('wishlist')"><span>♥</span> Wishlist</div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ══════════════════════════════════
+
+       PAGE: FINDER
+
+  ══════════════════════════════════ -->
+
+    <div class="page" id="page-finder">
+
+        <div class="inner-page">
+
+            <div class="page-eyebrow anim">Fragrance Finder</div>
+
+            <h1 class="page-title anim-1">Match Me to My<br><em>Perfect Scent</em></h1>
+
+            <p class="page-subtitle anim-2">Select your preferences and we'll find fragrances that suit your season,
+                mood, and taste.</p>
+
+
+
+            <div class="card anim-3">
+
+                <div class="controls">
+
+                    <label class="field">Season
+
+                        <select id="season">
+
+                            <option value="">Any Season</option>
+
+                            <option value="spring">Spring</option>
+
+                            <option value="summer">Summer</option>
+
+                            <option value="fall">Fall</option>
+
+                            <option value="winter">Winter</option>
+
+                        </select>
+
+                    </label>
+
+                    <label class="field">Scent Profile
+
+                        <select id="profile">
+
+                            <option value="">Any Profile</option>
+
+                            <option value="fresh">Fresh</option>
+
+                            <option value="floral">Floral</option>
+
+                            <option value="sweet">Sweet</option>
+
+                            <option value="woody">Woody</option>
+
+                        </select>
+
+                    </label>
+
+                    <label class="field">House Type
+
+                        <select id="category">
+
+                            <option value="">Any House</option>
+
+                            <option value="designer">Designer</option>
+
+                            <option value="niche">Niche</option>
+
+                            <option value="arab">Arab House</option>
+
+                        </select>
+
+                    </label>
+
+                    <button class="btn" style="align-self:flex-end" onclick="findFragrance()">Match Me →</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ══════════════════════════════════
+
+       PAGE: RESULTS (shown after Finder)
+
+  ══════════════════════════════════ -->
+
+    <div class="page" id="page-results">
+
+        <div class="inner-page" id="resultsContent"></div>
+
+    </div>
+
+
+
+    <!-- ══════════════════════════════════
+
+       PAGE: AI ASSISTANT
+
+  ══════════════════════════════════ -->
+
+    <div class="page" id="page-assistant">
+
+        <div class="inner-page">
+
+            <div class="page-eyebrow anim">AI Recommender</div>
+
+            <h1 class="page-title anim-1">Describe Your<br><em>Ideal Scent</em></h1>
+
+            <p class="page-subtitle anim-2">Tell us what you're looking for in natural language — season, mood, notes —
+                and we'll find your match.</p>
+
+
+
+            <div class="card anim-3">
+
+                <div class="input-row">
+
+                    <input id="aiInput" placeholder="e.g. something fresh for summer with citrus and sea salt…">
+
+                    <button class="btn" onclick="aiRecommend()">Recommend</button>
+
+                </div>
+
+                <div id="aiResult" class="result-text"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ══════════════════════════════════
+
+       PAGE: DATABASE
+
+  ══════════════════════════════════ -->
+
+    <div class="page" id="page-database">
+
+        <div class="inner-page">
+
+            <div class="page-eyebrow anim">Fragrance Database</div>
+
+            <h1 class="page-title anim-1">Browse <em>All Fragrances</em></h1>
+
+            <p class="page-subtitle anim-2">Explore our full collection. Filter by profile or house, or search by name.
+            </p>
+
+
+
+            <input class="db-search anim-3" id="dbSearch" placeholder="Search by name or house…" oninput="renderGrid()">
+
+
+
+            <div class="filter-chips anim-3" id="dbFilters">
+
+                <button class="chip active" data-filter="" onclick="setFilter(this,'')">All</button>
+
+                <button class="chip" data-filter="fresh" onclick="setFilter(this,'fresh')">Fresh</button>
+
+                <button class="chip" data-filter="floral" onclick="setFilter(this,'floral')">Floral</button>
+
+                <button class="chip" data-filter="sweet" onclick="setFilter(this,'sweet')">Sweet</button>
+
+                <button class="chip" data-filter="woody" onclick="setFilter(this,'woody')">Woody</button>
+
+                <button class="chip" data-filter="designer" onclick="setFilter(this,'designer')">Designer</button>
+
+                <button class="chip" data-filter="niche" onclick="setFilter(this,'niche')">Niche</button>
+
+                <button class="chip" data-filter="arab" onclick="setFilter(this,'arab')">Arab House</button>
+
+            </div>
+
+
+
+            <div class="frag-grid" id="fragGrid"></div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ══════════════════════════════════
+
+       PAGE: CLONE FINDER
+
+  ══════════════════════════════════ -->
+
+    <div class="page" id="page-clone">
+
+        <div class="inner-page">
+
+            <div class="page-eyebrow anim">Budget Alternatives</div>
+
+            <h1 class="page-title anim-1">Clone <em>Finder</em></h1>
+
+            <p class="page-subtitle anim-2">Enter a luxury fragrance name and we'll find you an affordable dupe that
+                smells just as good.</p>
+
+
+
+            <div class="card anim-3">
+
+                <div class="input-row">
+
+                    <input id="cloneInput" placeholder="e.g. Creed Aventus, Dior Sauvage…">
+
+                    <button class="btn" onclick="cloneFinder()">Find Clone</button>
+
+                </div>
+
+                <div id="cloneResult" class="result-text"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ══════════════════════════════════
+
+       PAGE: PRICE CHECKER
+
+  ══════════════════════════════════ -->
+
+    <div class="page" id="page-price">
+
+        <div class="inner-page">
+
+            <div class="page-eyebrow anim">Currency Converter</div>
+
+            <h1 class="page-title anim-1">Price <em>Checker</em></h1>
+
+            <p class="page-subtitle anim-2">See any fragrance's price converted to your local currency using live
+                exchange rates.</p>
+
+
+
+            <div class="card anim-3">
+
+                <div class="controls">
+
+                    <label class="field">Fragrance
+
+                        <select id="fragranceSelect">
+
+                            <option value="">Select a fragrance…</option>
+
+                        </select>
+
+                    </label>
+
+                    <label class="field">Currency
+
+                        <select id="currencySelect">
+
+                            <option value="">Select currency…</option>
+
+                        </select>
+
+                    </label>
+
+                    <button class="btn" style="align-self:flex-end" onclick="checkPrice()">Check Price</button>
+
+                </div>
+
+                <div id="priceResult" class="result-text"></div>
+
+                <div class="rate-note" id="rateNote"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ══════════════════════════════════
+
+       PAGE: WISHLIST
+
+  ══════════════════════════════════ -->
+
+    <div class="page" id="page-wishlist">
+
+        <div class="inner-page">
+
+            <div class="page-eyebrow anim">Saved</div>
+
+            <h1 class="page-title anim-1">My <em>Wishlist</em></h1>
+
+            <p class="page-subtitle anim-2">Fragrances you've saved. Click the ♥ on any card across the app to add them
+                here.</p>
+
+            <div class="frag-grid anim-3" id="wishlistGrid"></div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <div class="footer-logo">FragMatch</div>
+
+        <div class="footer-links">
+
+            <button onclick="navigate('finder')">Finder</button>
+
+            <button onclick="navigate('assistant')">AI Recommender</button>
+
+            <button onclick="navigate('database')">Database</button>
+
+            <button onclick="navigate('clone')">Clone Finder</button>
+
+            <button onclick="navigate('price')">Price Checker</button>
+
+            <button onclick="navigate('wishlist')">Wishlist</button>
+
+        </div>
+
+        <div class="footer-note">Prices are MSRP estimates. Exchange rates updated live where possible.</div>
+
+    </footer>
+
+
+
+    <script>
+
+        /* ═══════════════════════════════════════════════════
+      
+           DATA
+      
+        ═══════════════════════════════════════════════════ */
+
+        const fragrances = [
+
+            { name: "Byredo Mojave Ghost", house: "Byredo", profile: "floral", season: "spring", notes: ["violet", "cedarwood", "musk"], price: 190, currency: "USD" },
+
+            { name: "Byredo Bal d'Afrique", house: "Byredo", profile: "floral", season: "spring", notes: ["bergamot", "violet", "tonka bean"], price: 190, currency: "USD" },
+
+            { name: "Byredo Vanilla Antique", house: "Byredo", profile: "sweet", season: "fall", notes: ["vanilla", "plum", "amber"], price: 390, currency: "USD" },
+
+            { name: "Clive Christian Blonde Amber", house: "Clive Christian", profile: "woody", season: "winter", notes: ["amber", "tobacco", "tonka"], price: 560, currency: "USD" },
+
+            { name: "Mancera Amore Café", house: "Mancera", profile: "sweet", season: "winter", notes: ["amber", "coffee", "vanilla"], price: 150, currency: "USD" },
+
+            { name: "Montale Arabian's Tonka", house: "Montale", profile: "woody", season: "winter", notes: ["rose", "oud", "amber"], price: 140, currency: "USD" },
+
+            { name: "Initio Side Effect", house: "Initio", profile: "sweet", season: "fall", notes: ["cinnamon", "rum", "sandalwood"], price: 320, currency: "USD" },
+
+            { name: "Initio Oud for Greatness", house: "Initio", profile: "woody", season: "winter", notes: ["lavender", "saffron", "oud"], price: 365, currency: "USD" },
+
+            { name: "Inito Paragon", house: "Initio", profile: "fruity", season: "all", notes: ["plum", "sandalwood", "lavender"], price: 330, currency: "USD" },
+
+            { name: "Initio Musk Therapy", house: "Initio", profile: "fresh", season: "summer", notes: ["bergamot", "musk", "sandalwood"], price: 320, currency: "USD" },
+
+            { name: "Maison Crivelli Oud Maracuja", house: "Maison Crivelli", profile: "woody", season: "winter", notes: ["oud", "passionfruit", "rose"], price: 350, currency: "USD" },
+
+            { name: "Maison Crivelli Oud Cadenza", house: "Maison Crivelli", profile: "sweet", season: "fall", notes: ["vanilla", "saffron", "oud"], price: 350, currency: "USD" },
+
+            { name: "Maison Crivelli Hibiscus Mahajada", house: "Maison Crivelli", profile: "floral", season: "all", notes: ["hibiscus", "rose", "vanilla"], price: 350, currency: "USD" },
+
+            { name: "Maison Francis Kurkdjian Baccarat Rouge 540", house: "Maison Francis Kurkdjian", profile: "sweet", season: "all", notes: ["saffron", "amberwood", "cedar"], price: 360, currency: "USD" },
+
+            { name: "Maison Francis Kurkdjian Oud Satin Mood", house: "Maison Francis Kurkdjian", profile: "woody", season: "winter", notes: ["oud", "rose", "amber"], price: 340, currency: "USD" },
+
+            { name: "Maison Francis Kurkdjian Grand Soir", house: "Maison Francis Kurkdjian", profile: "sweet", season: "fall", notes: ["amber", "tonka bean", "vanilla"], price: 275, currency: "USD" },
+
+            { name: "Parfumes de Marly Althair", house: "Parfumed de Marley", profile: "sweet", season: "fall", notes: ["vanilla", "cinnamon", "bergamot"], price: 330, currency: "USD" },
+
+            { name: "Parfumes de Marly Greenly", house: "Parfumes de Marley", profile: "fresh", season: "summer", notes: ["green apple", "bergamot", "amberwood"], price: 325, cuurency: "USD" },
+
+            { name: "Parfumes de Marly Layton", house: "Parfumes de Marley", profile: "fresh", season: "summer", notes: ["lavender", "vanilla", "apple"], price: 330, currency: "USD" },
+
+            { name: "Kilian Angels' Share", house: "Kilian", profile: "sweet", season: "fall", notes: ["tonka bean", "oak", "cognac"], price: 275, currency: "USD" },
+
+            { name: "Kilian Angels' Share Paradis", house: "Kilian", profile: "sweet", season: "fall", notes: ["raspberry", "cognac", "rose"], price: 385, currency: "USD" },
+
+            { name: "Stephane Humbert Lucas God of Fire", house: "Stephane Humbert Lucas", profile: "sweet", season: "summer", notes: ["mango", "oud", "jasmine"], price: 245, currency: "USD" },
+
+            { name: "Stephane Humbert Lucas Sand Dance", house: "Stephane Humbert Lucas", profile: "sweet", season: "winter", notes: ["cocoa", "whiskey cream", "tonka bean"], price: 245, currency: "USD" },
+
+            { name: "Creed Aventus", house: "Creed", profile: "fresh", season: "all", notes: ["pineapple", "bergamot", "woody"], price: 380, currency: "USD" },
+
+            { name: "Creed Aventus Absolu", house: "Creed", profile: "fresh", season: "all", notes: ["pineapple", "grapefruit", "pineapple"], price: 435, currency: "USD" },
+
+            { name: "Amouage Outlands", house: "Amouage", profile: "fresh", season: "all", notes: ["citrus", "floral", "vanilla"], price: 475, currency: "USD" },
+
+            { name: "Room 1015 Wavechild", house: "Room 1015", profile: "fresh", season: "summer", notes: ["watermelon", "woody", "citrus"], price: 185, currency: "USD" },
+
+            { name: "Yves Saint Laurent Y Eau de Parfum", house: "Yves Saint Laurent", profile: "fresh", season: "all", notes: ["apple", "amber", "sage"], price: 165, currency: "USD" },
+
+            { name: "Yves Saint Laurent Babycat", house: "Yves Saint Laurent", profile: "sweet", season: "fall", notes: ["bourbon vanilla", "pink pepper", "saffron"], price: 330, currency: "USD" },
+
+            { name: "Dolce & Gabbana Light Blue", house: "Dolce & Gabbana", profile: "fresh", season: "summer", notes: ["sea water", "grapefruit", "musk"], price: 120, currency: "USD" },
+
+            { name: "Azzaro The Most Wanted Parfum", house: "Azzaro", profile: "sweet", season: "fall", notes: ["bourbon vanilla", "woody", "ginger"], price: 150, currency: "USD" },
+
+            { name: "Maison Margiela Replica By The Fireplace", house: "Maison Margiela", profile: "woody", season: "winter", notes: ["pink pepper", "vanilla", "chestnut"], price: 175, currency: "USD" },
+
+            { name: "Chanel Bleu de Chanel", house: "Chanel", profile: "fresh", season: "all", notes: ["citrus", "sandalwood", "ambery cedar"], price: 135, currency: "USD" },
+
+            { name: "Versace Pour Homme Dylan Blue", house: "Versace", profile: "fresh", season: "all", notes: ["citrus", "musk", "patchouli"], price: 120, currency: "USD" },
+
+            { name: "Versace Pour Homme", house: "Versace", profile: "fresh", season: "all", notes: ["musk", "rose", "bergamot"], price: 95, currency: "USD" },
+
+            { name: "Tom Ford Oud Wood", house: "Tom Ford", profile: "woody", season: "winter", notes: ["oud", "pink pepper", "tonka bean"], price: 300, currency: "USD" },
+
+            { name: "Tom Ford Tobacco Vanille", house: "Tom Ford", profile: "sweet", season: "fall", notes: ["tobacco", "vanilla", "cocoa"], price: 445, currency: "USD" },
+
+            { name: "Tom Ford Vanilla Sex", house: "Tom Ford", profile: "sweet", season: "fall", notes: ["vanilla", "sandalwood", "jasmine"], price: 405, currency: "USD" },
+
+            { name: "Emporio Armani Stronger With You Absolutely", house: "Emporio Armani", profile: "sweet", season: "fall", notes: ["rum", "vanilla", "lavender"], price: 125, currency: "USD" },
+
+            { name: "Emporio Armani Stronger With You Intensely", house: "Emporio Armani", profile: "sweet", season: "fall", notes: ["cinnamon", "vanilla", "lavender"], price: 120, currency: "USD" },
+
+            { name: "Emporio Armani Stronger With You Oud", house: "Emporio Armani", profile: "sweet", season: "fall", notes: ["oud", "vanilla", "lavender"], price: 185, currency: "USD" },
+
+            { name: "Emporio Armani Stronger With You Tobacco", house: "Emporio Armani", profile: "sweet", season: "fall", notes: ["tobacco", "bourbon vanilla", "pink pepper"], price: 185, currency: "USD" },
+
+            { name: "Jean Paul Gaultier Le Beau Le Parfum", house: "Jean Paul Gaultier", profile: "fresh", season: "summer", notes: ["coconut", "sandalwood", "tonka bean"], price: 169, currency: "USD" },
+
+            { name: "Jean Paul Gaultier Le Male Le Parfum", house: "Jean Paul Gaultier", profile: "sweet", season: "fall", notes: ["lavender", "vanilla", "cardamom"], price: 160, currency: "USD" },
+
+            { name: "Jean Paul Gaultier Le Male Elixir", house: "Jean Paul Gaultier", profile: "sweet", season: "fall", notes: ["tonka bean", "lavender", "benzoin"], price: 178, currency: "USD" },
+
+            { name: "Jean Paul Gaultier Ultra Male", house: "Jean Paul Gaultier", profile: "sweet", season: "summer", notes: ["pear", "vanilla", "black lavender"], price: 162, currency: "USD" },
+
+            { name: "Louis Vuitton Imagination", house: "Louis Vuitton", profile: "fresh", season: "summer", notes: ["tea", "bergamot", "ginger"], price: 350, currency: "USD" },
+
+            { name: "Louis Vuitton Pacific Chill", house: "Louis Vuitton", profile: "fresh", season: "summer", notes: ["citrus", "apricot", "dates"], price: 350, currency: "USD" },
+
+            { name: "Louis Vuitton Symphony", house: "Louis Vuitton", profile: "fresh", season: "spring", notes: ["grapefruit", "ginger", "bergamot"], price: 595, currency: "USD" },
+
+            { name: "Louis Vuitton Les Sables Rose", house: "LOuis Vuitton", profile: "floral", season: "winter", notes: ["rose", "oud", "ambergris"], price: 440, currency: "USD" },
+
+            { name: "Louis Vuitton Ombre Nomade", house: "Louis Vuitton", profile: "woody", season: "fall", notes: ["oud", "rose", "saffron"], price: 440, currency: "USD" },
+
+            { name: "Christian Dior Sauvage Elixir", house: "Christian Dior", profile: "woody", season: "winter", notes: ["spicy", "lavender", "sandalwood"], price: 230, currency: "USD" },
+
+            { name: "Christian Dior Homme Intense", house: "Christian Dior", profile: "floral", season: "fall", notes: ["iris", "ambrette", "virginia cedar"], price: 195, currency: "USD" },
+
+            { name: "Christian Dior Tobacolor", house: "Dior", profile: "sweet", season: "fall", notes: ["tobacco", "honey", "plum"], price: 405, currency: "USD" },
+
+            { name: "Christian Dior Vanilla Diorama", house: "Dior", profile: "sweet", season: "fall", notes: ["bourbon vanilla", "rum", "pink pepper"], price: 405, currency: "USD" },
+
+            { name: "Christian Dior Oud Ispahan", house: "Dior", profile: "floral", season: "winter", notes: ["oud", "rose", "saffron"], price: 405, currency: "USD" },
+
+            { name: "Rasasi Hawas for him", house: "Rasasi", profile: "fruity", season: "summer", notes: ["bergamot", "plum", "musk"], price: 50, currency: "USD" },
+
+            { name: "Rasasi Hawas Ice", house: "Rasasi", profile: "fruity", season: "summer", notes: ["apple", "plum", "musk"], price: 60, currency: "USD" },
+
+            { name: "Rasasi Hawas Fire", house: "Rasasi", profile: "fruity", season: "all", notes: ["sage", "amber", "marine notes"], price: 55, currency: "USD" },
+
+            { name: "Maison Alhambra Woody Oud", house: "Maison Alhambra", profile: "woody", season: "winter", notes: ["oud", "sandalwood", "amberwood"], price: 20, currency: "USD" },
+
+            { name: "Maison Alhambra Tobacco Touch", house: "Maison Alhambra", profile: "sweet", season: "fall", notes: ["tobacco", "vanilla", "spicy"], price: 36, currency: "USD" },
+
+            { name: "Maison Alhambra L' Oudh", house: "Maison Alhambra", profile: "floral", season: "winter", notes: ["oud", "rose", "labdanum"], price: 32, currency: "USD" },
+
+            { name: "Paris Corner Rifaaqat", house: "Paris Corner", profile: "sweet", season: "fall", notes: ["vanilla", "saffron", "leather"], price: 30, currency: "USD" },
+
+            { name: "Arabiyat Marwa", house: "Arabiyat", profile: "fresh", season: "summer", notes: ["bergamot", "ginger", "tea"], price: 56, currency: "USD" },
+
+            { name: "Al Haramain Amber Oud Aqua Dubai", house: "Al Haramain", profile: "fresh", season: "summer", notes: ["vanilla", "bergamot", "pineapple"], price: 95, currency: "USD" },
+
+            { name: "Al Haramain Amber Oud Dubai Night", house: "Al Haramain", profile: "floral", season: "fall", notes: ["saffron", "bulgarian rose", "musk"], price: 100, currency: "USD" },
+
+            { name: "Armaf Club de Nuit Intense Man", house: "Armaf", profile: "fruity", season: "all", notes: ["pineapple", "vanilla", "bergamot"], price: 55, currency: "USD" },
+
+            { name: "Armaf Club de Nuit Untold", house: "Armaf", profile: "fresh", season: "summer", notes: ["citrus", "sandalwood", "jasmine"], price: 60, currency: "USD" },
+
+            { name: "Armaf Club de Nuit Iconic", house: "Armaf", profile: "floral", season: "all", notes: ["saffron", "cedar", "amberwood"], price: 80, currency: "USD" },
+
+            { name: "Rayhaan Elixir", house: "Rayhaan", profile: "sweet", season: "fall", notes: ["vanilla", "lavender", "tonka bean"], price: 35, currency: "USD" },
+
+            { name: "Rayhaan Terra", house: "Rayhaan", profile: "sweet", season: "all", notes: ["vanilla", "bergamot", "saffron"], price: 50, currency: "USD" },
+
+            { name: "Rayhaan Pacific Aura", house: "Rayhaan", profile: "fresh", season: "summer", notes: ["mint", "mandarin", "amber"], price: 40, currency: "USD" },
+
+            { name: "Rayhaan Obsidian", house: "Rayhaan", profile: "floral", season: "fall", notes: ["iris", "sandalwood", "leather"], price: 38, currency: "USD" },
+
+            { name: "Afnan Supremacy Collectors Edition", house: "Afnan", profile: "fruity", season: "all", notes: ["pineapple", "bergamot", "musk"], price: 60, currency: "USD" },
+
+            { name: "Afnan 9PM", house: "Afnan", profile: "sweet", season: "all", notes: ["vanilla", "apple", "lavender"], price: 40, currency: "USD" },
+
+            { name: "Fragrance World Proud of You Intense", house: "Fragrance World", profile: "sweet", season: "fall", notes: ["vanilla", "cinnamon", "lavender"], price: 20, currency: "USD" },
+
+            { name: "Fragrance World Proud of You Absolute", house: "Frangrance World", profile: "sweet", season: "fall", notes: ["vanilla", "rum", "lavender"], price: 20, currency: "USD" },
+
+            { name: "Fragrance World Proud of You Tobacco", house: "Fragrance World", profile: "sweet", season: "fall", notes: ["bourbon vanilla", "tobacco", "pink pepper"], price: 20, currency: "USD" },
+
+            { name: "Fragrance World Proud of You Oud", house: "Fragrance World", profile: "sweet", season: "winter", notes: ["oud", "lavender", "vanilla"], price: 20, currency: "USD" },
+
+            { name: "Fragrance World Vanilla Drama", house: "Fragrance World", profile: "sweet", season: "fall", notes: ["bourbon vanilla", "rum", "pink pepper"], price: 20, currency: "USD" },
+
+            { name: "Fragrance World Tobacco Gourmand", house: "Fragrance World", profile: "sweet", season: "fall", notes: ["plum", "honey", "tobacco"], price: 20, currency: "USD" },
+
+            { name: "Fragrance World Sexy Vanilla", house: "Fragrance World", profile: "sweet", season: "all", notes: ["vanilla", "almond", "tonka bean"], price: 25, currency: "USD" },
+
+            { name: "Khadlaj Island", house: "Khadlaj", profile: "fresh", season: "summer", notes: ["coconut", "sandalwood", "tonka bean"], price: 25, currency: "USD" },
+
+            { name: "Khadlaj Island Dreams", house: "Khadlaj", profile: "fresh", season: "summer", notes: ["bergamot", "tea", "ginger"], price: 25, currency: "USD" },
+
+            { name: "Lattafa Asad", house: "Lattafa", profile: "woody", season: "fall", notes: ["vanilla", "iris", "spicy"], price: 40, currency: "USD" },
+
+            { name: "Lattafa Asad Bourbon", house: "Lattafa", profile: "sweet", season: "fall", notes: ["bourbon vanilla", "lavender", "cacao"], price: 40, currency: "USD" },
+
+            { name: "Lattafa Vintage Radio", house: "Lattafa", profile: "fruity", season: "fall", notes: ["plum", "lavender", "oud"], price: 48, currency: "USD" },
+
+            { name: "Lattafa Eternal Oud", house: "Lattafa", profile: "sweet", season: "fall", notes: ["vanilla", "plum", "oud"], price: 40, currency: "USD" },
+
+            { name: "Lattafa Khamrah", house: "Lattafa", profile: "sweet", season: "fall", notes: ["vanilla", "cinnamon", "dates"], price: 38, currency: "USD" },
+
+            { name: "Lattafa Fakhar", house: "Lattafa", profile: "fresh", season: "summer", notes: ["apple", "cedar", "lavender"], price: 20, currency: "USD" },
+
+            { name: "Lattafa Bade'e Al Oud Oud for Glory", house: "Lattafa", profile: "woody", season: "winter", notes: ["oud", "saffron", "patchouli"], price: 30, currency: "USD" },
+
+            { name: "Lattafa Bade'e Al Oud Amethyst", house: "Lattafa", profile: "floral", season: "winter", notes: ["oud", "rose", "pepper"], price: 35, currency: "USD" },
+
+            { name: "Lattafa Bade'e Al Oud Honour and Glory", house: "Lattafa", profile: "sweet", season: "all", notes: ["pineapple", "creme brulee", "sandalwood"], price: 30, currency: "USD" },
+
+            { name: "Lattafa Maahir Legacy", house: "Lattafa", profile: "fresh", season: "summer", notes: ["mint", "cirtus", "tonka bean"], price: 30, currency: "USD" },
+
+            { name: "French Avenue Azzure Oudh", house: "French Avenue", profile: "woody", season: "winter", notes: ["oud", "passion fruit", "woods"], price: 40, currency: "USD" },
+
+            { name: "French Avenue Liquid Brun", house: "French Avenue", profile: "sweet", season: "fall", notes: ["cinnamon", "bourbon vanilla", "musk"], price: 40, currency: "USD" },
+
+            { name: "French Avenue Cocoa Morado", house: "French Avenue", profile: "sweet", season: "winter", notes: ["cocoa", "madagascar vanilla", "oud"], price: 40, currency: "USD" },
+
+            { name: "French Avenue Amber Empire", house: "French Avenue", profile: "sweet", season: "winter", notes: ["amber", "sandalwood", "vanilla"], price: 50, currency: "USD" },
+
+            { name: "French Avenue Vulcan Feu", house: "French Avenue", profile: "sweet", season: "summer", notes: ["mango", "jasmine", "amber"], price: 35, currency: "USD" },
+
+            { name: "French Avenue Vulcan Sable", house: "French Avenue", profile: "sweet", season: "fall", notes: ["vanilla", "cocoa", "whiskey"], price: 35, currency: "USD" },
+
+            { name: "French Avenue Aether", house: "French Avenue", profile: "fresh", season: "summer", notes: ["green apple", "violet", "musk"], price: 35, currency: "USD" },
+
+            { name: "French Avenue Atlantis", house: "French Avenue", profile: "fresh", season: "summer", notes: ["watermelon", "citrus", "ambergris"], price: 40, currency: "USD" }
+
+        ];
+        const arabHouses = ["Lattafa", "French Avenue", "Armaf", "Rasasi", "Maison Alhambra", "Al Haramain", "Fragrance World", "Rayhaan", "Afnan", "Khadlaj", "Arabiyat", "Paris Corner", "Fragrance World"];
+
+        const nicheHouses = ["Byredo", "Maison Francis Kurkdjian", "Amouage", "Clive Christian", "Parfums de Marly", "Mancera", "Kilian", "Xerjoff", "Maiso Crivelli", "Stephane Humbert Lucas", "Initio"];
+
+
+
+        fragrances.forEach(f => {
+
+            if (arabHouses.includes(f.house)) f.category = 'arab';
+
+            else if (nicheHouses.includes(f.house)) f.category = 'niche';
+
+            else f.category = 'designer';
+
+        });
+
+
+
+        const clones = {
+
+            "Dior Sauvage": { clone: "Lattafa Asad", price: 40, currency: "USD" },
+
+            "Azzaro The Most Wanted Parfum": { clone: "Lattafa Asad Bourbon", price: 40, currency: "USD" },
+
+            "Initio Paragon": { clone: "Lattafa Vintage Radio", price: 48, currency: "USD" },
+
+            "Maison Francis Kurkdjian Grand Soir": { clone: "Lattafa Eternal Oud", price: 40, currency: "USD" },
+
+            "Kilian Angels' Share": { clone: "Lattafa Khamrah", price: 38, currency: "USD" },
+
+            "Yves Saint Laurent Y Eau de Parfum": { clone: "Lattafa Fakhar Silver", price: 20, currency: "USD" },
+
+            "Initio Oud for Greatness": { clone: "Lattafa Badee Al Oudh Oud For Glory", price: 30, currency: "USD" },
+
+            "Inito Side Effect": { clone: "Lattafa Badee Al Oudh Amethyst", price: 35, currency: "USD" },
+
+            "Inito Musk Therapy": { clone: "Lattafa Badee Al Oudh Honour and Glory", price: 30, currency: "USD" },
+
+            "Parfumes de Marly Layton": { clone: "Lattafa Maahir Legacy", price: 30, currency: "USD" },
+
+            "Maison Crivelli Oud Maracuja": { clone: "French Avenue Azzure Oudh", price: 40, currency: "USD" },
+
+            "Parfumes de Marly Althair": { clone: "French Avenue Liquid Brun", price: 40, currency: "USD" },
+
+            "Maison Crivelli Oud Cadenza": { clone: "French Avenue Cocoa Morado", price: 40, currency: "USD" },
+
+            "Clive Christian Blonde Amber": { clone: "French Avenue Amber Empire", price: 50, currency: "USD" },
+
+            "Stephane Humbert Lucas God of Fire": { clone: "French Avenue Vulcan Feu", price: 35, currency: "USD" },
+
+            "Stephane Humbert Lucas Sand Dance": { clone: "French Avenue Vulcan Sable", price: 35, currency: "USD" },
+
+            "Parfumes de Marly Greenly": { clone: "French Avenue Aether", price: 35, currency: "USD" },
+
+            "Room 1015 Wavechild": { clone: "French Avenue Atlantis", price: 40, currency: "USD" },
+
+            "Jean Paul Gaultier Le Beau Le Parfum": { clone: "Khadlaj Island", price: 25, currency: "USD" },
+
+            "Louis Vuitton Symphony": { clone: "Khadlaj Island Dreams", price: 25, currency: "USD" },
+
+            "Creed Aventus Absolu": { clone: "Afnan Supremacy Collectors Edition", price: 60, currency: "USD" },
+
+            "Jean Paul Gaultier Ultra Male": { clone: "Afnan 9PM", price: 40, currency: "USD" },
+
+            "Creed Aventus": { clone: "Armaf Club de Nuit Intense Man", price: 55, currency: "USD" },
+
+            "Chanel Bleu de Chanel": { clone: "Armaf Club de Nuit Untold", price: 60, currency: "USD" },
+
+            "Maison Francis Kurkdjian Baccarat Rouge 540": { clone: "Armaf Club de Nuit Iconic", price: 80, currency: "USD" },
+
+            "Jean Paul Gaultier Le Male Elixir": { clone: "Rayhaan Elixir", price: 35, currency: "USD" },
+
+            "Amouage Outlands": { clone: "Rayhaan Terra", price: 50, currency: "USD" },
+
+            "Louis Vuitton Pacific Chill": { clone: "Rayhaan Pacific Aura", price: 40, currency: "USD" },
+
+            "Dior Homme Intense": { clone: "Rayhaan Obsidian", price: 38, currency: "USD" },
+
+            "Xerjoff Erba Pura": { clone: "Al Haramain Amber Oud Aqua Dubai", price: 95, currency: "USD" },
+
+            "Yves Saint Laurent Babycat": { clone: "Paris Corner Rifaaqat", price: 30, currency: "USD" },
+
+            "Louis Vuitton Imagination": { clone: "Arabiyat Marwa", price: 56, currency: "USD" },
+
+            "Tom Ford Oud Wood": { clone: "Maison Alhambra Woody Oud", price: 20, currency: "USD" },
+
+            "Tom Ford Tobacco Vanille": { clone: "Maison Alhambra Tobacco Touch", price: 36, currency: "USD" },
+
+            "Dior Oud Ispahan": { clone: "Maison Alhambra L' Oudh", price: 32, currency: "USD" },
+
+            "Giorgio Armani Stronger With You Intensely": { clone: "Fragrance World Proud of You Intense", price: 20, currency: "USD" },
+
+            "Giorgio Armani Stronger With You Tobacco": { clone: "Fragrance World Proud of You Tobacco", price: 20, currency: "USD" },
+
+            "Giorgio Armani Stronger With You Oud": { clone: "Fragrance World Proud of You Oud", price: 20, currency: "USD" },
+
+            "Giorgio Armani Stronger With You Absolutely": { clone: "Fragrance World Proud of You Absolute", price: 20, currency: "USD" },
+
+            "Dior Vanilla Diorama": { clone: "Fragrance World Vanilla Drama", price: 20, currency: "USD" },
+
+            "Dior Tobacolor": { clone: "Fragrance World Tobacco Gourmand", price: 20, currency: "USD" },
+
+            "Tom Ford Vanilla Sex": { clone: "Fragrance World Sexy Vanilla", price: 20, currency: "USD" },
+
+        };
+
+
+
+        let exchangeRates = {
+
+            USD: 1, EUR: 0.92, GBP: 0.79, JPY: 149, AED: 3.67, SAR: 3.75, INR: 83,
+
+            CNY: 7.24, KRW: 1325, BRL: 4.97, ZAR: 18.6, AUD: 1.53, CAD: 1.36, CHF: 0.90,
+
+            SEK: 10.4, NOK: 10.6, DKK: 6.9, PLN: 4.0, TRY: 30.5, ILS: 3.7, EGP: 30.9,
+
+            THB: 35.1, SGD: 1.34, HKD: 7.82, MYR: 4.7, IDR: 15700, PHP: 56, TWD: 31.5,
+
+        };
+
+
+
+        /* ═══════════════════════════════════════════════════
+      
+           NAVIGATION
+      
+        ═══════════════════════════════════════════════════ */
+
+        const NAV_PAGES = ['home', 'finder', 'assistant', 'database', 'clone', 'price', 'wishlist', 'results'];
+
+
+
+        function navigate(id) {
+
+            // Hide all pages
+
+            NAV_PAGES.forEach(p => {
+
+                const el = document.getElementById('page-' + p);
+
+                if (el) el.classList.remove('active');
+
+            });
+
+
+
+            // Show target
+
+            const target = document.getElementById('page-' + id);
+
+            if (target) {
+
+                target.classList.add('active');
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            }
+
+
+
+            // Update nav button active state
+
+            document.querySelectorAll('nav button').forEach(btn => {
+
+                btn.classList.remove('active');
+
+                if (btn.getAttribute('onclick') === `navigate('${id}')`) {
+
+                    btn.classList.add('active');
+
+                }
+
+            });
+
+
+
+            // Close mobile nav
+
+            document.getElementById('mainNav').classList.remove('open');
+
+            document.getElementById('navToggle').classList.remove('open');
+
+
+
+            // Page-specific init
+
+            if (id === 'database') renderGrid();
+
+            if (id === 'wishlist') renderWishlist();
+
+            if (id === 'price') initPricePage();
+
+        }
+
+
+
+        /* ═══════════════════════════════════════════════════
+      
+           MOBILE NAV TOGGLE
+      
+        ═══════════════════════════════════════════════════ */
+
+        document.getElementById('navToggle').addEventListener('click', function () {
+
+            document.getElementById('mainNav').classList.toggle('open');
+
+            this.classList.toggle('open');
+
+        });
+
+
+
+        /* ═══════════════════════════════════════════════════
+      
+           HERO SLIDESHOW
+      
+        ═══════════════════════════════════════════════════ */
+
+        let currentSlide = 0;
+
+        const slideEls = document.querySelectorAll('.slide');
+
+        const dotEls = document.querySelectorAll('.dot');
+
+
+
+        function goToSlide(n) {
+
+            slideEls[currentSlide].classList.remove('active');
+
+            dotEls[currentSlide].classList.remove('active');
+
+            currentSlide = (n + slideEls.length) % slideEls.length;
+
+            slideEls[currentSlide].classList.add('active');
+
+            dotEls[currentSlide].classList.add('active');
+
+        }
+
+
+
+        setInterval(() => goToSlide(currentSlide + 1), 5000);
+
+
+
+        /* ═══════════════════════════════════════════════════
+      
+           WISHLIST HELPERS
+      
+        ═══════════════════════════════════════════════════ */
+
+        function getSaved() {
+
+            try { return JSON.parse(localStorage.getItem('fragmatch-wishlist') || '[]'); }
+
+            catch { return []; }
+
+        }
+
+
+
+        function setSaved(arr) { localStorage.setItem('fragmatch-wishlist', JSON.stringify(arr)); }
+
+
+
+        function toggleWishlist(name, btn) {
+
+            let saved = getSaved();
+
+            if (saved.includes(name)) {
+
+                saved = saved.filter(n => n !== name);
+
+                btn.classList.remove('saved');
+
+                showToast('Removed from wishlist');
+
+            } else {
+
+                saved.push(name);
+
+                btn.classList.add('saved');
+
+                showToast('Added to wishlist ♥');
+
+            }
+
+            setSaved(saved);
+
+            // Refresh wishlist if open
+
+            if (document.getElementById('page-wishlist').classList.contains('active')) renderWishlist();
+
+        }
+
+
+
+        /* ═══════════════════════════════════════════════════
+      
+           FRAGRANCE CARD HTML
+      
+        ═══════════════════════════════════════════════════ */
+
+        function fragCardHTML(f) {
+
+            const saved = getSaved();
+
+            const esc = f.name.replace(/'/g, "\\'");
+
+            return `
+
+      <div class="frag-card">
+
+        <button class="wishlist-btn ${saved.includes(f.name) ? 'saved' : ''}"
+
+                onclick="toggleWishlist('${esc}', this)"
+
+                title="${saved.includes(f.name) ? 'Remove from wishlist' : 'Add to wishlist'}">♥</button>
+
+        <div class="frag-card-house">${f.house}</div>
+
+        <div class="frag-card-name">${f.name}</div>
+
+        <div class="frag-card-meta">
+
+          <span class="tag tag-season">${f.season}</span>
+
+          <span class="tag tag-profile">${f.profile}</span>
+
+          <span class="tag tag-cat">${f.category}</span>
+
+        </div>
+
+        <div class="frag-card-price">$${f.price}</div>
+
+        <div class="frag-card-notes">${f.notes.join(' ? ')}</div>
+
+      </div>`;
+
+        }
+
+
+
+        /* ═══════════════════════════════════════════════════
+      
+           DATABASE GRID
+      
+        ═══════════════════════════════════════════════════ */
+
+        let activeFilter = '';
+
+
+
+        function setFilter(el, val) {
+
+            activeFilter = val;
+
+            document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+
+            el.classList.add('active');
+
+            renderGrid();
+
+        }
+
+
+
+        function renderGrid() {
+
+            const search = (document.getElementById('dbSearch').value || '').toLowerCase();
+
+            const grid = document.getElementById('fragGrid');
+
+
+
+            let list = fragrances.filter(f => {
+
+                const matchFilter = !activeFilter || f.profile === activeFilter || f.category === activeFilter;
+
+                const matchSearch = !search || f.name.toLowerCase().includes(search) || f.house.toLowerCase().includes(search);
+
+                return matchFilter && matchSearch;
+
+            });
+
+
+
+            if (list.length === 0) {
+
+                grid.innerHTML = '<div class="grid-empty">No fragrances match your search.</div>';
+
+                return;
+
+            }
+
+
+
+            grid.innerHTML = list.map(fragCardHTML).join('');
+
+        }
+
+
+
+        /* ═══════════════════════════════════════════════════
+      
+           WISHLIST PAGE
+      
+        ═══════════════════════════════════════════════════ */
+
+        function renderWishlist() {
+
+            const saved = getSaved();
+
+            const grid = document.getElementById('wishlistGrid');
+
+
+
+            if (saved.length === 0) {
+
+                grid.innerHTML = '<p class="wishlist-empty">No fragrances saved yet — click ♥ on any card to save it.</p>';
+
+                return;
+
+            }
+
+
+
+            const list = fragrances.filter(f => saved.includes(f.name));
+
+            grid.innerHTML = list.map(fragCardHTML).join('');
+
+        }
+
+
+
+        /* ═══════════════════════════════════════════════════
+      
+           FINDER
+      
+        ═══════════════════════════════════════════════════ */
+
+        function findFragrance() {
+
+            const season = document.getElementById('season').value;
+
+            const profile = document.getElementById('profile').value;
+
+            const category = document.getElementById('category').value;
+
+
+
+            let matches = fragrances.filter(f =>
+
+                (f.season === season || f.season === 'all' || !season) &&
+
+                (f.profile === profile || !profile) &&
+
+                (f.category === category || !category)
+
+            );
+
+
+
+            if (matches.length < 4) {
+
+                const broader = fragrances.filter(f =>
+
+                    ((f.season === season || f.season === 'all' || !season) ||
+
+                        (f.profile === profile || !profile) ||
+
+                        (f.category === category || !category)) &&
+
+                    !matches.includes(f)
+
+                );
+
+                matches = [...matches, ...broader];
+
+            }
+
+
+
+            if (matches.length === 0) {
+
+                showToast('No matches found — try relaxing your filters.');
+
+                return;
+
+            }
+
+
+
+            const selected = shuffle(matches).slice(0, 4);
+
+            const main = selected[0];
+
+            const alternatives = selected.slice(1);
+
+
+
+            showResults(main, alternatives);
+
+        }
+
+
+
+        /* ═══════════════════════════════════════════════════
+      
+           RESULTS PAGE
+      
+        ═══════════════════════════════════════════════════ */
+
+        function getScentScores(frag) {
+
+            const noteMap = {
+
+                Fresh: ['citrus', 'marine', 'sea salt', 'aquatic', 'bergamot', 'grapefruit', 'yuzu', 'sage', 'rosemary', 'lavender', 'neroli', 'fig'],
+
+                Floral: ['jasmine', 'rose', 'tuberose', 'violet', 'lily', 'peony', 'rangoon creeper', 'white flowers', 'geranium'],
+
+                Sweet: ['vanilla', 'honey', 'cocoa', 'gourmand', 'benzoin', 'tonka bean', 'caramel', 'amber', 'musk'],
+
+                Woody: ['sandalwood', 'cedar', 'oud', 'vetiver', 'patchouli', 'tobacco', 'leather', 'frankincense', 'birch'],
+
+                Spicy: ['cardamom', 'cinnamon', 'pepper', 'ginger', 'saffron', 'clove', 'spicy'],
+
+            };
+
+            const scores = {};
+
+            for (const [dim, kw] of Object.entries(noteMap)) {
+
+                scores[dim] = frag.notes.filter(n => kw.includes(n)).length;
+
+            }
+
+            if (frag.profile === 'fresh') scores['Fresh'] = Math.max(scores['Fresh'], 2);
+
+            if (frag.profile === 'floral') scores['Floral'] = Math.max(scores['Floral'], 2);
+
+            if (frag.profile === 'sweet') scores['Sweet'] = Math.max(scores['Sweet'], 2);
+
+            if (frag.profile === 'woody') scores['Woody'] = Math.max(scores['Woody'], 2);
+
+
+
+            const max = Math.max(...Object.values(scores), 1);
+
+            const pcts = {};
+
+            for (const k in scores) pcts[k] = Math.round((scores[k] / max) * 100);
+
+            return pcts;
+
+        }
+
+
+
+        function showResults(frag, alternatives) {
+
+            const saved = getSaved();
+
+            const scores = getScentScores(frag);
+
+            const esc = frag.name.replace(/'/g, "\\'");
+
+
+
+            document.getElementById('resultsContent').innerHTML = `
+
+      <div class="page-eyebrow anim">Your Match</div>
+
+      <h1 class="page-title anim-1">We found your<br><em>perfect scent</em></h1>
+
+ 
+
+      <div class="main-card anim-2">
+
+        <div class="card-house">${frag.house} ? ${frag.category}</div>
+
+        <div class="card-name">${frag.name}</div>
+
+ 
+
+        <div class="frag-card-meta" style="margin-bottom:20px">
+
+          <span class="tag tag-season">${frag.season}</span>
+
+          <span class="tag tag-profile">${frag.profile}</span>
+
+          <span class="tag tag-cat">${frag.category}</span>
+
+        </div>
+
+ 
+
+        <div class="card-notes">Notes: <span>${frag.notes.join(', ')}</span></div>
+
+ 
+
+        <div class="radar-wrap">
+
+          <div class="radar-label">Scent Profile</div>
+
+          <div class="radar-bars">
+
+            ${Object.entries(scores).map(([dim, pct]) => `
+
+              <div class="radar-row">
+
+                <div class="radar-name">${dim}</div>
+
+                <div class="radar-track"><div class="radar-fill" data-pct="${pct}" style="width:0%"></div></div>
+
+                <div class="radar-pct">${pct}%</div>
+
+              </div>`).join('')}
+
+          </div>
+
+        </div>
+
+ 
+
+        <div class="price-row">
+
+          <div class="price-amount" id="resultPrice">$${frag.price}</div>
+
+          <select class="price-currency" onchange="updateResultPrice(${frag.price}, this.value)">
+
+            ${Object.keys(exchangeRates).map(c => `<option value="${c}">${c}</option>`).join('')}
+
+          </select>
+
+          <button class="wishlist-btn-main ${saved.includes(frag.name) ? 'saved' : ''}"
+
+                  id="resultWishBtn"
+
+                  onclick="toggleWishlistResult('${esc}', this)">
+
+            ♥ ${saved.includes(frag.name) ? 'Saved!' : 'Save to Wishlist'}
+
+          </button>
+
+        </div>
+
+      </div>
+
+ 
+
+      ${alternatives.length > 0 ? `
+
+        <div class="page-eyebrow anim-2" style="margin-bottom:12px">You might also like</div>
+
+        <h2 class="page-title anim-3" style="font-size:clamp(24px,3vw,34px);margin-bottom:20px">Similar Fragrances</h2>
+
+        <div class="alts-grid anim-3">
+
+          ${alternatives.map(a => `
+
+            <div class="alt-card">
+
+              <div class="alt-house">${a.house}</div>
+
+              <div class="alt-name">${a.name}</div>
+
+              <div class="alt-price">$${a.price}</div>
+
+              <div class="alt-notes">${a.notes.join(' ? ')}</div>
+
+            </div>`).join('')}
+
+        </div>` : ''}
+
+ 
+
+      <div style="margin-top:48px">
+
+        <button class="btn btn-outline" onclick="navigate('finder')">← Try Another Match</button>
+
+      </div>
+
+    `;
+
+
+
+            navigate('results');
+
+
+
+            // Animate radar bars after transition
+
+            requestAnimationFrame(() => {
+
+                setTimeout(() => {
+
+                    document.querySelectorAll('.radar-fill').forEach(el => {
+
+                        el.style.width = el.dataset.pct + '%';
+
+                    });
+
+                }, 120);
+
+            });
+
+        }
+
+
+
+        function updateResultPrice(usdPrice, currency) {
+
+            const rate = exchangeRates[currency] ?? 1;
+
+            const converted = (usdPrice * rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            document.getElementById('resultPrice').textContent = `${converted} ${currency}`;
+
+        }
+
+
+
+        function toggleWishlistResult(name, btn) {
+
+            let saved = getSaved();
+
+            if (saved.includes(name)) {
+
+                saved = saved.filter(n => n !== name);
+
+                btn.classList.remove('saved');
+
+                btn.innerHTML = '♥ Save to Wishlist';
+
+                showToast('Removed from wishlist');
+
+            } else {
+
+                saved.push(name);
+
+                btn.classList.add('saved');
+
+                btn.innerHTML = '♥ Saved!';
+
+                showToast('Added to wishlist ♥');
+
+            }
+
+            setSaved(saved);
+
+        }
+
+
+
+        /* ═══════════════════════════════════════════════════
+      
+           AI RECOMMENDER
+      
+        ═══════════════════════════════════════════════════ */
+
+        function aiRecommend() {
+
+            const input = document.getElementById('aiInput').value.toLowerCase();
+
+            const result = document.getElementById('aiResult');
+
+
+
+            if (!input.trim()) {
+
+                result.innerHTML = 'Please describe what you\'re looking for.';
+
+                return;
+
+            }
+
+
+
+            const seasons = ['summer', 'winter', 'spring', 'fall'];
+
+            const profiles = ['fresh', 'sweet', 'woody', 'floral'];
+
+            const noteList = [
+
+                'citrus', 'marine', 'vanilla', 'cocoa', 'spicy', 'woody', 'pineapple', 'birch',
+
+                'musk', 'leather', 'cinnamon', 'honey', 'oud', 'sandalwood', 'cardamom',
+
+                'lavender', 'rosemary', 'sage', 'sea salt', 'jasmine', 'rose', 'yuzu', 'coffee',
+
+                'tuberose', 'apple', 'tonka bean', 'cedar', 'tobacco', 'patchouli', 'peach',
+
+                'iris', 'amber', 'bergamot', 'geranium', 'pepper', 'vetiver', 'fig', 'neroli',
+
+                'grapefruit', 'benzoin', 'frankincense', 'saffron', 'violet'
+
+            ];
+
+
+
+            const matchedSeasons = seasons.filter(s => input.includes(s));
+
+            const matchedProfiles = profiles.filter(p => input.includes(p));
+
+            const matchedNotes = noteList.filter(n => input.includes(n));
+
+
+
+            let matches = fragrances.filter(f => {
+
+                const seasonOk = matchedSeasons.length === 0 || matchedSeasons.includes(f.season) || f.season === 'all';
+
+                const profileOk = matchedProfiles.length === 0 || matchedProfiles.includes(f.profile);
+
+                const noteOk = matchedNotes.length === 0 || matchedNotes.some(n => f.notes.includes(n));
+
+                return seasonOk && profileOk && noteOk;
+
+            });
+
+
+
+            if (matches.length === 0) matches = fragrances;
+
+
+
+            const picks = shuffle(matches).slice(0, 3);
+
+            result.innerHTML = `
+
+      <p style="margin-bottom:14px">Based on your description, you might like:</p>
+
+      ${picks.map(f => `
+
+        <div style="margin-bottom:10px;padding:12px 16px;background:var(--surface2);border-radius:8px;border:1px solid var(--border)">
+
+          <span class="hl"><strong>${f.name}</strong></span>
+
+          <span style="color:var(--muted);font-size:13px"> by ${f.house}</span>
+
+          <span style="color:var(--muted);font-size:13px"> — ${f.profile} ? $${f.price}</span>
+
+        </div>`).join('')}`;
+
+        }
+
+
+
+        /* ═══════════════════════════════════════════════════
+      
+           CLONE FINDER
+      
+        ═══════════════════════════════════════════════════ */
+
+        function cloneFinder() {
+
+            const input = document.getElementById('cloneInput').value.toLowerCase().trim();
+
+            const result = document.getElementById('cloneResult');
+
+
+
+            if (!input) { result.innerHTML = 'Enter a fragrance name to find a clone.'; return; }
+
+
+
+            for (const original in clones) {
+
+                if (input.includes(original) || original.includes(input)) {
+
+                    const c = clones[original];
+
+                    const displayName = original.split(' ').map(w => w[0].toUpperCase() + w.slice(1)).join(' ');
+
+                    result.innerHTML = `
+
+          <div style="padding:16px 20px;background:var(--surface2);border-radius:10px;border:1px solid var(--border)">
+
+            A great dupe for <strong>${displayName}</strong> is
+
+            <span class="hl">${c.clone}</span> — around <strong>$${c.price}</strong>.
+
+          </div>`;
+
+                    return;
+
+                }
+
+            }
+
+
+
+            result.innerHTML = `No clone on record for "<em>${input}</em>". Try just the brand or just the fragrance name.`;
+
+        }
+
+
+
+        /* ═══════════════════════════════════════════════════
+      
+           PRICE CHECKER
+      
+        ═══════════════════════════════════════════════════ */
+
+        function initPricePage() {
+
+            const fragSel = document.getElementById('fragranceSelect');
+
+            const currSel = document.getElementById('currencySelect');
+
+
+
+            // Only populate once
+
+            if (fragSel.options.length <= 1) {
+
+                fragrances.forEach(f => {
+
+                    const opt = document.createElement('option');
+
+                    opt.value = f.name;
+
+                    opt.textContent = `${f.name} — ${f.house}`;
+
+                    fragSel.appendChild(opt);
+
+                });
+
+            }
+
+
+
+            if (currSel.options.length <= 1) {
+
+                Object.keys(exchangeRates).forEach(c => {
+
+                    const opt = document.createElement('option');
+
+                    opt.value = c;
+
+                    opt.textContent = c;
+
+                    currSel.appendChild(opt);
+
+                });
+
+            }
+
+        }
+
+
+
+        function checkPrice() {
+
+            const name = document.getElementById('fragranceSelect').value;
+
+            const currency = document.getElementById('currencySelect').value;
+
+            const result = document.getElementById('priceResult');
+
+
+
+            if (!name || !currency) {
+
+                result.innerHTML = 'Please select both a fragrance and a currency.';
+
+                return;
+
+            }
+
+
+
+            const frag = fragrances.find(f => f.name === name);
+
+            if (!frag) { result.innerHTML = 'Fragrance not found.'; return; }
+
+
+
+            const rate = exchangeRates[currency] ?? 1;
+
+            const converted = (frag.price * rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+
+
+            result.innerHTML = `
+
+      ${frag.name} by ${frag.house}:<br>
+
+      <strong>${converted} ${currency}</strong>
+
+      <span style="color:var(--muted);font-size:13px"> ≈ $${frag.price} USD</span>`;
+
+        }
+
+
+
+        /* ═══════════════════════════════════════════════════
+      
+           LIVE EXCHANGE RATES
+      
+        ═══════════════════════════════════════════════════ */
+
+        async function fetchLiveRates() {
+
+            try {
+
+                const res = await fetch('https://api.frankfurter.app/latest?from=USD');
+
+                if (res.ok) {
+
+                    const data = await res.json();
+
+                    exchangeRates = { USD: 1, ...data.rates };
+
+                    const note = document.getElementById('rateNote');
+
+                    if (note) note.textContent = 'Live exchange rates loaded.';
+
+                }
+
+            } catch (_) { }
+
+        }
+
+
+
+        /* ═══════════════════════════════════════════════════
+      
+           TOAST
+      
+        ═══════════════════════════════════════════════════ */
+
+        function showToast(msg) {
+
+            document.querySelectorAll('.toast').forEach(t => t.remove());
+
+            const t = document.createElement('div');
+
+            t.className = 'toast';
+
+            t.textContent = msg;
+
+            document.body.appendChild(t);
+
+            setTimeout(() => t.remove(), 2600);
+
+        }
+
+
+
+        /* ═══════════════════════════════════════════════════
+      
+           UTILITIES
+      
+        ═══════════════════════════════════════════════════ */
+
+        function shuffle(arr) {
+
+            const a = [...arr];
+
+            for (let i = a.length - 1; i > 0; i--) {
+
+                const j = Math.floor(Math.random() * (i + 1));
+
+                [a[i], a[j]] = [a[j], a[i]];
+
+            }
+
+            return a;
+
+        }
+
+
+
+        /* ═══════════════════════════════════════════════════
+      
+           INIT
+      
+        ═══════════════════════════════════════════════════ */
+
+        fetchLiveRates();
+
+    </script>
+
+</body>
+
+</html>
